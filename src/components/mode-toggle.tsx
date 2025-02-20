@@ -1,5 +1,3 @@
-import { Moon, Sun } from "lucide-react";
-
 import { useTheme } from "@/components/theme-provider";
 
 import { Label } from "@/components/ui/label";
