@@ -22,7 +22,7 @@ const Location = () => {
           </button>
         </DrawerTrigger>
 
-        <DrawerContent className="p-4">
+        <DrawerContent className="p-4 pt-0">
           {" "}
           <h2 className="text-lg font-semibold text-center">
             Manzilni tanlang
