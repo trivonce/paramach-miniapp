@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import Lottie from "lottie-react";
+import notFoundLottie from '@/assets/lotties/not_found.json'
 
 const BasketPage = () => {
   return (
@@ -8,7 +10,7 @@ const BasketPage = () => {
       exit={{ opacity: 0, y: -50 }}
       className="container"
     >
-      Basket
+      <Lottie animationData={notFoundLottie} loop={true} />
     </motion.main>
   );
 };
