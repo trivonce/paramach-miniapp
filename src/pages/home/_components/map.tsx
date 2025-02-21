@@ -9,9 +9,9 @@ import { MapPinPlusInside } from "lucide-react";
 
 const YandexMap = () => {
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
-  const [coords, setCoords] = useState<[number, number] | null>(null);
+  const [_coords, setCoords] = useState<[number, number] | null>(null);
   const [locationName, setLocationName] = useState<string>("Fetching location...");
-  const [error, setError] = useState<string | null>(null);
+  const [_error, setError] = useState<string | null>(null);
 
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
