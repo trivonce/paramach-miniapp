@@ -1,6 +1,5 @@
 import { YMaps, Map } from "react-yandex-maps";
 import { useEffect, useState } from "react";
-import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
