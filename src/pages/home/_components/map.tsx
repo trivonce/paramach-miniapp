@@ -105,7 +105,7 @@ const YandexMap = () => {
             />
             {/* Fixed Marker */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <MapPin color="red" size={30} />
+              <span className="icon icon-pin !w-8 !h-8 !bg-red-600" />
             </div>
           </div>
         ) : (

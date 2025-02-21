@@ -36,6 +36,24 @@
   font-family: 'Baloo 2', cursive;
 }
 
+.icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  mask-repeat: no-repeat;
+  mask-size: 100%;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+  -webkit-mask-position: center;
+  vertical-align: middle;
+  background-color: #000000;
+}
+.icon-pin {
+  mask-image: url(./assets/icons/pin.png);
+  -webkit-mask-image: url(./assets/icons/pin.png);
+}
+
 @layer base {
   :root {
 
