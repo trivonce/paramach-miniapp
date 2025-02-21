@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import { AnimatePresence } from "framer-motion";
+import { Toaster } from 'sonner';
 
 // pages
 import HomePage from "./pages/home";
@@ -24,6 +25,7 @@ const App = () => {
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <Toaster position="top-center" />
       <AnimatePresence mode="wait">
         <Suspense fallback={<>Loading...</>}>
           <Routes location={pathname} key={pathname}>

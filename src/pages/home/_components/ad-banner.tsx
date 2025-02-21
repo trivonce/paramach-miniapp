@@ -32,6 +32,7 @@ const AdBanner = () => {
       >
         {banners.map((banner) => (
           <SwiperSlide
+            key={banner.id}
             className="min-h-32 last:rounded-r-2xl first:rounded-l-2xl"
             style={{
               backgroundImage: `url(${banner.image})`,

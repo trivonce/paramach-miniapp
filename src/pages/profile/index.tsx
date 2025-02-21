@@ -24,6 +24,7 @@ const settings = [
   {
     id: "2",
     title: "Xabar va yangiliklar",
+    action: () => window.open("https://t.me/paramach_uz", "_blank"),
     icon: NewspaperIcon,
   },
   {
@@ -56,7 +57,7 @@ const ProfilePage = () => {
         }} exit={{
         opacity: 0,
         y: -50
-    }} className=" pt-3 bg-background min-h-screen">
+    }} className=" pt-3 dark:bg-background bg-gray-100 min-h-screen">
       <div className="container">
       <div className="flex items-center gap-5 dark:bg-gray-900 bg-white rounded-xl p-3">
         <span className="relative">
@@ -89,11 +90,11 @@ const ProfilePage = () => {
       </div>
 
       <div className="dark:bg-gray-900 bg-white mt-3 rounded-xl flex flex-col">
-        {settings.map(({ id, title, icon: Icon, wrapper }) => {
+        {settings.map(({ id, title, icon: Icon, wrapper, action }) => {
           const Comp = wrapper || Slot;
           return (
             <Comp key={id}>
-              <button className="flex items-center justify-between px-4 border-b  py-3 last:border-none group">
+              <button onClick={action} className="flex items-center justify-between px-4 border-b  py-3 last:border-none group">
                 <span className="flex items-center gap-3">
                   <Icon size={24} />
                   <h1 className="">{title}</h1>

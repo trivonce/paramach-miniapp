@@ -10,6 +10,14 @@
   display: none;
 }
 
+.ymaps-layers-pane {
+  filter: grayscale(1);
+  -ms-filter: grayscale(1);
+  -webkit-filter: grayscale(1);
+  -moz-filter: grayscale(1);
+  -o-filter: grayscale(1);
+  }
+
 /* Hide scrollbar for IE & Edge */
 *::-ms-scrollbar {
   display: none;

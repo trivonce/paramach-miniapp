@@ -37,7 +37,7 @@ const MenuBar = () => {
     <div className="fixed bottom-0 left-0 px-2 pb-2 w-full bg-transparent z-40 ">
       <div className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] flex justify-evenly items-center text-center rounded-3xl py-2 dark:bg-gray-900/[0.8] bg-white/[0.6] backdrop-blur-md">
         {menu.map(({ id, name, icon: Icon, to }, index) => (
-          <span className="flex justify-center">
+          <span key={id} className="flex justify-center">
             <NavLink
               key={index}
               className={({ isActive }) =>
