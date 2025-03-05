@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import Lottie from "lottie-react";
-import notFoundLottie from '@/assets/lotties/not_found.json'
+import EmptyCart from "./_components/empty-cart";
+import CartProducts from "./_components/cart-products";
+
 
 const BasketPage = () => {
   return (
@@ -8,9 +9,12 @@ const BasketPage = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.2 }}
       className="container"
     >
-      <Lottie animationData={notFoundLottie} loop={true} />
+      {/* <EmptyCart /> */}
+
+      <CartProducts />
     </motion.main>
   );
 };

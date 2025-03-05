@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-const Orders = () => {
+const CheckoutPage = () => {
     return <motion.main
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
@@ -12,4 +12,4 @@ const Orders = () => {
   </motion.main>
 }
 
-export default Orders
+export default CheckoutPage
