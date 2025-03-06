@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import Counter from "./ui/counter";
 
+const MotionButton = motion(Button);
+
 export type AddButtonProps = {
   initialCount?: number;
   minCount?: number;
@@ -10,51 +12,116 @@ export type AddButtonProps = {
   onChange?: (count: number) => void;
 };
 
+const PILL_RADIUS = 20;
+
+const leftButtonVariants = {
+  inactive: {
+    borderTopLeftRadius: PILL_RADIUS,
+    borderTopRightRadius: PILL_RADIUS,
+    borderBottomRightRadius: PILL_RADIUS,
+    borderBottomLeftRadius: PILL_RADIUS,
+  },
+  active: {
+    borderTopLeftRadius: PILL_RADIUS,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: PILL_RADIUS,
+  },
+};
+
+const rightButtonVariants = {
+  inactive: {
+    borderTopLeftRadius: PILL_RADIUS,
+    borderTopRightRadius: PILL_RADIUS,
+    borderBottomRightRadius: PILL_RADIUS,
+    borderBottomLeftRadius: PILL_RADIUS,
+  },
+  active: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: PILL_RADIUS,
+    borderBottomRightRadius: PILL_RADIUS,
+    borderBottomLeftRadius: 0,
+  },
+};
+
+const overlayVariants = {
+  active: {
+    opacity: 0,
+    scale: 0,
+    transition: { delay: 0 },
+  },
+  inactive: {
+    opacity: 1,
+    scale: 1,
+    transition: { delay: 0.15 },
+  },
+};
+
 export const AddButton = ({
-  initialCount = 1,
+  initialCount = 0,
   minCount = 1,
   maxCount = 99,
   onChange,
 }: AddButtonProps) => {
-  const [isActive, setIsActive] = useState(false);
   const [count, setCount] = useState(initialCount);
+  const isActive = count > 0;
 
-  const handleDecrement = () => {
+  const handleIncrement = () => {
     setCount((prev) => {
-      const newCount = prev > minCount ? prev - 1 : prev;
-      if (newCount === minCount) setIsActive(false);
+      let newCount;
+      if (!isActive) {
+        newCount = minCount;
+      } else if (prev < maxCount) {
+        newCount = prev + 1;
+      } else {
+        newCount = prev;
+      }
       onChange?.(newCount);
       return newCount;
     });
   };
 
-  const handleIncrement = () => {
+  const handleDecrement = () => {
     setCount((prev) => {
-      const newCount = prev < maxCount ? prev + 1 : prev;
+      let newCount;
+      if (prev === minCount) {
+        newCount = 0;
+      } else if (prev > minCount) {
+        newCount = prev - 1;
+      } else {
+        newCount = prev;
+      }
       onChange?.(newCount);
       return newCount;
     });
   };
 
   return (
-    <div className="flex relative mt-2">
+    <div className="flex relative">
       <motion.button
+        variants={overlayVariants}
         initial={false}
-        onClick={() => setIsActive(true)}
+        animate={isActive ? "active" : "inactive"}
+        onClick={handleIncrement}
         className="absolute top-0 left-0 w-full h-full"
-        animate={{ opacity: isActive ? 0 : 1, scale: isActive ? 0 : 1 }}
-        transition={{ delay: isActive ? 0 : 0.15 }}
+        style={{ pointerEvents: isActive ? "none" : "auto" }}
       >
         <span className="text-center text-white flex items-center justify-center text-sm font-semibold">
           Qo'shish
         </span>
       </motion.button>
-      <Button
+
+      <MotionButton
         onClick={handleDecrement}
-        className={`w-full ${!isActive && "rounded-r-none"}`}
+        className="w-full"
+        variants={leftButtonVariants}
+        initial={false}
+        animate={!isActive ? "active" : "inactive"}
+        transition={{ duration: 0.3 }}
       >
         <motion.span animate={{ opacity: isActive ? 1 : 0 }}>-</motion.span>
-      </Button>
+      </MotionButton>
+
       <motion.div
         initial={false}
         animate={{
@@ -63,16 +130,29 @@ export const AddButton = ({
           width: isActive ? "40px" : 0,
           marginInline: isActive ? "5px" : 0,
         }}
-        className="rounded-xl dark:bg-gray-800 bg-gray-100 text-center flex items-center justify-center font-medium shrink-0"
+        style={{ borderRadius: 12 }}
+        className="dark:bg-gray-800 bg-gray-100 text-center flex items-center justify-center font-medium shrink-0"
       >
-        <Counter value={count} places={[10, 1]} fontSize={14} padding={10} gap={0} fontWeight={600} />
+        <Counter
+          value={count}
+          places={[10, 1]}
+          fontSize={14}
+          padding={10}
+          gap={0}
+          fontWeight={600}
+        />
       </motion.div>
-      <Button
+
+      <MotionButton
         onClick={handleIncrement}
-        className={`w-full ${!isActive && "rounded-l-none pointer-events-none"}`}
+        className="w-full"
+        variants={rightButtonVariants}
+        initial={false}
+        animate={!isActive ? "active" : "inactive"}
+        transition={{ duration: 0.3 }}
       >
         <motion.span animate={{ opacity: isActive ? 1 : 0 }}>+</motion.span>
-      </Button>
+      </MotionButton>
     </div>
   );
 };

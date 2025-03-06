@@ -4,6 +4,8 @@ import CartProducts from "./_components/cart-products";
 
 
 const BasketPage = () => {
+  const isCartEmpty = false
+
   return (
     <motion.main
       initial={{ opacity: 0, y: 50 }}
@@ -12,9 +14,7 @@ const BasketPage = () => {
       transition={{ duration: 0.2 }}
       className="container"
     >
-      {/* <EmptyCart /> */}
-
-      <CartProducts />
+      {isCartEmpty ? <EmptyCart /> : <CartProducts />}
     </motion.main>
   );
 };

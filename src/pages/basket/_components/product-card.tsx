@@ -5,7 +5,8 @@ const ProductCard = () => {
         <img className="w-[120px]" src="https://placehold.co/600x400" />
 
         <div>
-            <h1>Product name</h1>
+            <h1>Shakaladli Paramach</h1>
+            
             <AddButton />
         </div>
     </div>
