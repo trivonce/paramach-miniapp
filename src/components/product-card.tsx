@@ -25,7 +25,7 @@ const ProductCard = (props: Props) => {
         <h1 className="text-tp-main font-medium line-clamp-2 text-sm leading-4 h-8">{name || 'Placeholder'}</h1>
         <p className="text-sm mt-1">{formatPrice(price || 0)}</p>
 
-        <AddButton />
+        <AddButton className='mt-4' />
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ export type AddButtonProps = {
   minCount?: number;
   maxCount?: number;
   onChange?: (count: number) => void;
+  className?: string
 };
 
 const PILL_RADIUS = 20;
@@ -62,6 +63,7 @@ export const AddButton = ({
   minCount = 1,
   maxCount = 99,
   onChange,
+  className
 }: AddButtonProps) => {
   const [count, setCount] = useState(initialCount);
   const isActive = count > 0;
@@ -97,7 +99,7 @@ export const AddButton = ({
   };
 
   return (
-    <div className="flex relative">
+    <div className={`flex relative ${className}`}>
       <motion.button
         variants={overlayVariants}
         initial={false}
@@ -112,6 +114,7 @@ export const AddButton = ({
       </motion.button>
 
       <MotionButton
+      size='sm'
         onClick={handleDecrement}
         className="w-full"
         variants={leftButtonVariants}
@@ -144,6 +147,7 @@ export const AddButton = ({
       </motion.div>
 
       <MotionButton
+      size='sm'
         onClick={handleIncrement}
         className="w-full"
         variants={rightButtonVariants}
