@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, useAnimation } from "framer-motio
 import { useState, useRef } from "react"
 import { Trash } from "lucide-react"
 import AddButton from "@/components/add-button"
+import { Button } from "@/components/ui/button"
 
 const ProductCard = () => {
   const [isDeleted, setIsDeleted] = useState(false)
@@ -116,7 +117,12 @@ const ProductCard = () => {
             <h1 className="font-medium">Shakaladli Paramach</h1>
             <p className="mt-1 dark:text-gray-300 text-sm font-baloo">7000 so'm</p>
           </div>
-          <AddButton className="w-[120px]" />
+          <div className="flex items-center gap-2">
+            <AddButton className="w-[120px]" />
+            <Button className="bg-red-900/[.5] h-8 w-8" size={'icon'}>
+              <Trash  />
+            </Button>
+          </div>
         </div>
       </motion.div>
     </div>

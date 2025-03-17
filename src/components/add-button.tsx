@@ -108,7 +108,7 @@ export const AddButton = ({
         className="absolute top-0 left-0 w-full h-full"
         style={{ pointerEvents: isActive ? "none" : "auto" }}
       >
-        <span className="text-center text-white flex items-center justify-center text-sm font-semibold">
+        <span className="text-center text-white flex items-center justify-center text-sm font-semibold h-full">
           Qo'shish
         </span>
       </motion.button>
@@ -116,7 +116,7 @@ export const AddButton = ({
       <MotionButton
       size='sm'
         onClick={handleDecrement}
-        className="w-full"
+        className="w-full h-8"
         variants={leftButtonVariants}
         initial={false}
         animate={!isActive ? "active" : "inactive"}
@@ -149,7 +149,7 @@ export const AddButton = ({
       <MotionButton
       size='sm'
         onClick={handleIncrement}
-        className="w-full"
+        className="w-full h-8"
         variants={rightButtonVariants}
         initial={false}
         animate={!isActive ? "active" : "inactive"}
