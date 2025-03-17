@@ -10,7 +10,7 @@ const Orders = () => {
     transition={{ duration: 0.2 }}
     className="container py-3 pb-20"
   >
-    <h1>Buyurtmalar </h1>
+    <h1>Buyurtmalar</h1>
 
     <ActiveOrder />
 
