@@ -1,16 +1,19 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Button } from "./ui/button";
 import Counter from "./ui/counter";
+import { useCartStore } from "@/lib/store/cart";
 
 const MotionButton = motion(Button);
 
 export type AddButtonProps = {
-  initialCount?: number;
+  id?: number;
+  name?: string;
+  price?: number;
+  image?: string;
   minCount?: number;
   maxCount?: number;
   onChange?: (count: number) => void;
-  className?: string
+  className?: string;
 };
 
 const PILL_RADIUS = 20;
@@ -58,44 +61,50 @@ const overlayVariants = {
   },
 };
 
-export const AddButton = ({
-  initialCount = 0,
-  minCount = 1,
+const AddButton = ({
+  id,
+  name,
+  price,
+  image,
+  minCount = 0,
   maxCount = 99,
   onChange,
-  className
+  className,
 }: AddButtonProps) => {
-  const [count, setCount] = useState(initialCount);
+  const addItem = useCartStore((state) => state.addItem);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeItem = useCartStore((state) => state.removeItem);
+  const items = useCartStore((state) => state.items);
+  const currentItem = items.find((item) => item.id === id);
+  const count = currentItem?.quantity || 0;
   const isActive = count > 0;
 
   const handleIncrement = () => {
-    setCount((prev) => {
-      let newCount;
-      if (!isActive) {
-        newCount = minCount;
-      } else if (prev < maxCount) {
-        newCount = prev + 1;
-      } else {
-        newCount = prev;
+    if (!id || !name || !price || !image) return;
+
+    if (!isActive) {
+      addItem({ id, name, price, image });
+      onChange?.(1);
+    } else {
+      const newCount = count + 1;
+      if (newCount <= maxCount) {
+        updateQuantity(id, newCount);
+        onChange?.(newCount);
       }
-      onChange?.(newCount);
-      return newCount;
-    });
+    }
   };
 
   const handleDecrement = () => {
-    setCount((prev) => {
-      let newCount;
-      if (prev === minCount) {
-        newCount = 0;
-      } else if (prev > minCount) {
-        newCount = prev - 1;
-      } else {
-        newCount = prev;
-      }
+    if (!id) return;
+
+    const newCount = count - 1;
+    if (newCount >= minCount) {
+      updateQuantity(id, newCount);
       onChange?.(newCount);
-      return newCount;
-    });
+    } else {
+      removeItem(id);
+      onChange?.(0);
+    }
   };
 
   return (
@@ -114,7 +123,7 @@ export const AddButton = ({
       </motion.button>
 
       <MotionButton
-      size='sm'
+        size='sm'
         onClick={handleDecrement}
         className="w-full h-8"
         variants={leftButtonVariants}
@@ -147,7 +156,7 @@ export const AddButton = ({
       </motion.div>
 
       <MotionButton
-      size='sm'
+        size='sm'
         onClick={handleIncrement}
         className="w-full h-8"
         variants={rightButtonVariants}

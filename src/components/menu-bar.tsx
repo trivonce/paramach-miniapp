@@ -1,5 +1,7 @@
 import { HomeIcon, ShoppingBasketIcon, TableOfContentsIcon, UserIcon } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { Button } from "./ui/button";
+import { useCartStore } from "../lib/store/cart-store";
 
 const menu = [
   {
@@ -28,11 +30,12 @@ const menu = [
   },
 ];
 
-const renderBadge = () => {
-  return <span className="bg-yellow-500 text-white text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center absolute -top-1 right-0">1</span>
-}
-
 const MenuBar = () => {
+  const { pathname } = useLocation();
+  const items = useCartStore((state: { items: any[] }) => state.items);
+
+  if (pathname === "/cart" || pathname === "/checkout") return null;
+
   return (
     <div className="fixed bottom-0 left-0 px-2 pb-2 w-full bg-transparent z-40 ">
       <div className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] flex justify-evenly items-center text-center rounded-3xl py-2 dark:bg-gray-900/[0.8] bg-white/[0.6] backdrop-blur-md">
@@ -47,7 +50,11 @@ const MenuBar = () => {
               }
               to={to}
             >
-              {id === 'cart' && renderBadge()}
+              {id === 'cart' && items.length > 0 && (
+                <span className="bg-yellow-500 text-white text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center absolute -top-1 right-0">
+                  {items.length}
+                </span>
+              )}
               <Icon className="shrink-0" size={30} />
               <span className="text-xs">{name}</span>
             </NavLink>

@@ -19,9 +19,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { ThemeProvider } from "./components/theme-provider";
+import { useTelegram } from "./lib/hooks/use-telegram";
 
 const App = () => {
   const { pathname } = useLocation();
+  useTelegram(); // Initialize Telegram Mini App
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">

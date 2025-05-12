@@ -81,7 +81,7 @@ const Location = () => {
                 className="w-full h-12"
               >
                 <MapPinHouse size={20} className="shrink-0" />
-                Mazil qo'shish
+                Manzil qo'shish
               </Button>
             </motion.div>
           )}

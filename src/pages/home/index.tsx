@@ -17,7 +17,7 @@ const HomePage = () => {
     >
       <Location />
       <AdBanner />
-      <PopularProducts />
+      {/* <PopularProducts /> */}
       <Products />
     </motion.main>
   );

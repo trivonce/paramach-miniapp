@@ -5,13 +5,23 @@ import { useState, useRef } from "react"
 import { Trash } from "lucide-react"
 import AddButton from "@/components/add-button"
 import { Button } from "@/components/ui/button"
+import { useCartStore } from "@/lib/store/cart"
+import { formatPrice } from "@/lib/utils"
 
-const ProductCard = () => {
+interface ProductCardProps {
+  id: number
+  name: string
+  price: number
+  image: string
+}
+
+const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
   const [isDeleted, setIsDeleted] = useState(false)
   const dragX = useMotionValue(0)
   const controls = useAnimation()
   const threshold = 80
   const isAtThreshold = useRef(false)
+  const removeItem = useCartStore((state) => state.removeItem)
 
   const progress = useTransform(dragX, [-threshold, 0], [1, 0], { clamp: true })
 
@@ -76,6 +86,7 @@ const ProductCard = () => {
                 },
               })
               .then(() => {
+                removeItem(id)
                 setIsDeleted(true)
               })
           } else {
@@ -106,21 +117,34 @@ const ProductCard = () => {
         <div className="w-[120px] relative z-[1] flex items-center overflow-hidden">
           <img
             className="absolute left-0 top-0 w-full h-full object-cover -z-[1] blur-sm"
-            src="https://placehold.co/600x400"
-            alt="placeholder"
+            src={image}
+            alt={name}
           />
-          <img className="object-contain" src="https://placehold.co/600x400" alt="Product" />
+          <img className="object-contain" src={image} alt={name} />
         </div>
 
         <div className="flex flex-col justify-between py-2">
           <div className="mb-3">
-            <h1 className="font-medium">Shakaladli Paramach</h1>
-            <p className="mt-1 dark:text-gray-300 text-sm font-baloo">7000 so'm</p>
+            <h1 className="font-medium">{name}</h1>
+            <p className="mt-1 dark:text-gray-300 text-sm font-baloo">{formatPrice(price)}</p>
           </div>
           <div className="flex items-center gap-2">
-            <AddButton className="w-[120px]" />
-            <Button className="bg-red-900/[.5] h-8 w-8" size={'icon'}>
-              <Trash  />
+            <AddButton 
+              id={id}
+              name={name}
+              price={price}
+              image={image}
+              className="w-[120px]" 
+            />
+            <Button 
+              className="bg-red-900/[.5] h-8 w-8" 
+              size={'icon'}
+              onClick={() => {
+                removeItem(id)
+                setIsDeleted(true)
+              }}
+            >
+              <Trash />
             </Button>
           </div>
         </div>

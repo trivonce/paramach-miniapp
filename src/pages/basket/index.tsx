@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import EmptyCart from "./_components/empty-cart";
 import CartProducts from "./_components/cart-products";
-
+import { useCartStore } from "@/lib/store/cart";
 
 const BasketPage = () => {
-  const isCartEmpty = false
+  const items = useCartStore((state) => state.items);
+  const isCartEmpty = items.length === 0;
 
   return (
     <motion.main

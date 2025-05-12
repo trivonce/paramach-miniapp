@@ -2,13 +2,14 @@ import { formatPrice } from "@/lib/utils";
 import AddButton from "./add-button";
 
 type Props = {
+    id?: number;
     name?: string;
     price?: number;
     image?: string;
 };
 
 const ProductCard = (props: Props) => {
-    const {name, price, image} = props
+    const {id, name, price, image} = props
 
   return (
     <div className="rounded-2xl overflow-hidden shadow-md mb-2 dark:bg-gray-900">
@@ -25,7 +26,13 @@ const ProductCard = (props: Props) => {
         <h1 className="text-tp-main font-medium line-clamp-2 text-sm leading-4 h-8">{name || 'Placeholder'}</h1>
         <p className="text-sm mt-1">{formatPrice(price || 0)}</p>
 
-        <AddButton className='mt-4' />
+        <AddButton 
+          id={id}
+          name={name}
+          price={price}
+          image={image}
+          className='mt-4' 
+        />
       </div>
     </div>
   );
