@@ -68,7 +68,7 @@ export function useCreateOrder() {
 }
 
 export function useOrders() {
-  const telegramId = useUserStore((state) => state.user?.id) || "7468341931";
+  const telegramId = useUserStore((state) => state.user?.id);
 
   return useQuery({
     queryKey: ["orders", telegramId],

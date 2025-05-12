@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { useCartStore } from "@/lib/store/cart"
 import { formatPrice } from "@/lib/utils"
 import { useCreateOrder } from "@/lib/hooks/use-orders"
+import { useUserStore } from "@/lib/store/user-store"
 
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -23,6 +24,7 @@ export default function CheckoutPage() {
   const clearCart = useCartStore((state) => state.clearCart)
 
   const createOrder = useCreateOrder()
+  const userId = useUserStore((state) => state.user?.id);
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const deliveryFee = 20000
@@ -40,12 +42,12 @@ export default function CheckoutPage() {
     }
 
     // Debug log for production error
-    console.log("Creating order with:", { orderData, telegram_id: "7468341931" });
+    console.log("Creating order with:", { orderData, telegram_id: userId });
 
     try {
       await createOrder.mutateAsync({ 
         orderData,
-        telegram_id: "7468341931"
+        telegram_id: userId?.toString() || ""
       })
       clearCart()
       setShowSuccess(true)
