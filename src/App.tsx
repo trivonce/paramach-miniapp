@@ -38,7 +38,7 @@ const App = () => {
             longitude: position.coords.longitude,
           });
         },
-        (error) => {
+        (_error) => {
           // Permission denied or unavailable, set default location
           setLocation({
             address: "Toshkent sh. Yunusobod tumani, Sh. Rustaveli ko'chasi 12",

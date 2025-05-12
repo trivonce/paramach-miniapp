@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+// import { AnimatePresence, motion } from "framer-motion";
 import {
   Drawer,
   DrawerContent,
@@ -10,21 +10,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { MapPinHouse, MapPinIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MapPinIcon } from "lucide-react";
 import Map from "./map";
 import { useLocationStore } from "@/lib/store/location-store";
-
-const locations = [
-  {
-    id: 1,
-    address: "Toshkent sh. Yunusobod tumani, Sh. Rusaveli ko'chasi 12",
-  },
-  {
-    id: 2,
-    address: "Toshkent sh. Yashnobod tumani, Aslonobod ko'chasi 113",
-  },
-];
 
 interface LocationProps {
   isOpen?: boolean;
@@ -35,7 +23,7 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const isOpen = controlledOpen !== undefined ? controlledOpen : uncontrolledOpen;
   const setIsOpen = onOpenChange || setUncontrolledOpen;
-  const openMap = true; // Always show map, not saved locations
+  // const openMap = true;
   const { setLocation, location } = useLocationStore();
 
   // Request geolocation if location is not set and drawer is open
