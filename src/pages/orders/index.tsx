@@ -7,9 +7,15 @@ import { ChevronRight, ShoppingBag, Clock } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { useOrders } from "@/lib/hooks/use-orders"
 
 export default function OrdersPage() {
   const [_activeTab, setActiveTab] = useState("active")
+  const { data: orders = [], isLoading, isError } = useOrders();
+
+  // Split orders into active and history
+  const activeOrders = orders.filter(order => ["pending", "processing", "delivering"].includes(order.status));
+  const orderHistory = orders.filter(order => ["delivered", "cancelled"].includes(order.status));
 
   return (
     <div className="flex flex-col min-h-screen bg-[#121212] pb-20">
@@ -37,7 +43,15 @@ export default function OrdersPage() {
           </TabsList>
 
           <TabsContent value="active" className="mt-4">
-            {activeOrders.length > 0 ? (
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <span className="text-white">Yuklanmoqda...</span>
+              </div>
+            ) : isError ? (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <span className="text-red-500">Buyurtmalarni yuklashda xatolik yuz berdi</span>
+              </div>
+            ) : activeOrders.length > 0 ? (
               <div className="space-y-4">
                 {activeOrders.map((order) => (
                   <ActiveOrderCard key={order.id} order={order} />
@@ -56,7 +70,15 @@ export default function OrdersPage() {
           </TabsContent>
 
           <TabsContent value="history" className="mt-4">
-            {orderHistory.length > 0 ? (
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <span className="text-white">Yuklanmoqda...</span>
+              </div>
+            ) : isError ? (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <span className="text-red-500">Buyurtmalarni yuklashda xatolik yuz berdi</span>
+              </div>
+            ) : orderHistory.length > 0 ? (
               <div className="space-y-4">
                 {orderHistory.map((order) => (
                   <OrderHistoryCard key={order.id} order={order} />
@@ -107,7 +129,7 @@ function ActiveOrderCard({ order }: any) {
 
       <div className="p-4">
         <div className="space-y-3">
-          {order.items.map((item: any, index: number) => (
+          {order.items?.map((item: any, index: number) => (
             <div key={index} className="flex justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-white">{item.quantity}x</span>
@@ -124,9 +146,9 @@ function ActiveOrderCard({ order }: any) {
           <p className="text-gray-400 text-sm">Yetkazib berish vaqti</p>
           <p className="text-white">{order.deliveryTime}</p>
         </div>
-        <Button variant="outline" className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
+        {/* <Button variant="outline" className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
           Kuzatish
-        </Button>
+        </Button> */}
       </div>
     </div>
   )
@@ -157,71 +179,12 @@ function OrderHistoryCard({ order }: any) {
         </div>
       </div>
 
-      <Link to={`/buyurtmalar/${order.id}`}>
-        <div className="p-4 bg-gray-900 flex justify-between items-center">
-          <span className="text-white">Batafsil</span>
-          <ChevronRight className="h-5 w-5 text-gray-400" />
-        </div>
-      </Link>
+      {/* <Link to={`/buyurtmalar/${order.id}`}> */}
+      {/*   <div className="p-4 bg-gray-900 flex justify-between items-center"> */}
+      {/*     <span className="text-white">Batafsil</span> */}
+      {/*     <ChevronRight className="h-5 w-5 text-gray-400" /> */}
+      {/*   </div> */}
+      {/* </Link> */}
     </div>
   )
 }
-
-// Sample data
-const activeOrders = [
-  {
-    id: "2305",
-    status: "pending",
-    statusText: "Kutilmoqda",
-    date: "12.05.2025",
-    restaurant: "Burger King",
-    total: "89,000",
-    deliveryTime: "30-40 daqiqa",
-    items: [
-      { name: "Whopper", quantity: 2, price: "45,000" },
-      { name: "Coca-Cola", quantity: 1, price: "9,000" },
-      { name: "Kartoshka fri", quantity: 1, price: "15,000" },
-    ],
-  },
-  {
-    id: "2304",
-    status: "delivering",
-    statusText: "Yetkazilmoqda",
-    date: "12.05.2025",
-    restaurant: "KFC",
-    total: "75,000",
-    deliveryTime: "10-15 daqiqa",
-    items: [
-      { name: "Tovuq qanotchalari", quantity: 1, price: "45,000" },
-      { name: "Pepsi", quantity: 2, price: "18,000" },
-      { name: "Kartoshka fri", quantity: 1, price: "12,000" },
-    ],
-  },
-]
-
-const orderHistory = [
-  {
-    id: "2303",
-    status: "delivered",
-    statusText: "Yetkazildi",
-    date: "11.05.2025",
-    restaurant: "Evos",
-    total: "65,000",
-  },
-  {
-    id: "2302",
-    status: "delivered",
-    statusText: "Yetkazildi",
-    date: "10.05.2025",
-    restaurant: "Max Way",
-    total: "120,000",
-  },
-  {
-    id: "2301",
-    status: "cancelled",
-    statusText: "Bekor qilindi",
-    date: "09.05.2025",
-    restaurant: "Burger King",
-    total: "95,000",
-  },
-]
