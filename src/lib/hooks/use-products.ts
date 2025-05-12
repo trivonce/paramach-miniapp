@@ -17,12 +17,12 @@ interface Product {
   category: number;
 }
 
-interface Category {
-  id: number;
-  name_uz: string;
-  name_ru: string;
-  products: Product[];
-}
+// interface Category {
+//   id: number;
+//   name_uz: string;
+//   name_ru: string;
+//   products: Product[];
+// }
 
 export function useProducts() {
   return useQuery<Product[]>({

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { ArrowLeft, CreditCard, Banknote, MapPin, Clock, ChevronRight, CheckCircle2 } from "lucide-react"
+import { ArrowLeft, Banknote, MapPin, Clock, ChevronRight, CheckCircle2 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useCartStore } from "@/lib/store/cart-store"
 import { formatPrice } from "@/lib/utils"
@@ -19,7 +19,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("cash")
   const [showSuccess, setShowSuccess] = useState(false)
   const items = useCartStore((state) => state.items)
-  const removeItem = useCartStore((state) => state.removeItem)
+  // const removeItem = useCartStore((state) => state.removeItem)
   const clearCart = useCartStore((state) => state.clearCart)
 
   const createOrder = useCreateOrder()

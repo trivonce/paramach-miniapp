@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 // components
 import Location from "./_components/location";
 import AdBanner from "./_components/ad-banner";
-import PopularProducts from "@/components/popular-products";
+// import PopularProducts from "@/components/popular-products";
 import Products from "./_components/products";
 
 const HomePage = () => {

@@ -1,6 +1,5 @@
 import { HomeIcon, ShoppingBasketIcon, TableOfContentsIcon, UserIcon } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Button } from "./ui/button";
 import { useCartStore } from "../lib/store/cart-store";
 
 const menu = [

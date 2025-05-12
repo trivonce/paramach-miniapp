@@ -1,5 +1,4 @@
 import { Button } from "./button";
-import { motion } from "framer-motion";
 
 interface CartCounterProps {
   value: number;

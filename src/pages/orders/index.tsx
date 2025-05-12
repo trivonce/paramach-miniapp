@@ -2,14 +2,14 @@
 
 import { useState } from "react"
 import {Link} from "react-router-dom"
-import { ChevronRight, Home, ShoppingBag, List, User, Clock } from "lucide-react"
+import { ChevronRight, ShoppingBag, Clock } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 export default function OrdersPage() {
-  const [activeTab, setActiveTab] = useState("active")
+  const [_activeTab, setActiveTab] = useState("active")
 
   return (
     <div className="flex flex-col min-h-screen bg-[#121212] pb-20">
