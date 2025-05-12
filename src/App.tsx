@@ -21,41 +21,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { ThemeProvider } from "./components/theme-provider";
 import { useTelegram } from "./lib/hooks/use-telegram";
-import { useLocationStore } from "@/lib/store/location-store";
 
 const App = () => {
   const { pathname } = useLocation();
   useTelegram();
-  const setLocation = useLocationStore((state) => state.setLocation);
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            address: "", // You can implement reverse geocoding if needed
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (_error) => {
-          // Permission denied or unavailable, set default location
-          setLocation({
-            address: "Toshkent sh. Yunusobod tumani, Sh. Rustaveli ko'chasi 12",
-            latitude: 41.2995,
-            longitude: 69.2401,
-          });
-        }
-      );
-    } else {
-      // Geolocation not supported, set default location
-      setLocation({
-        address: "Toshkent sh. Yunusobod tumani, Sh. Rustaveli ko'chasi 12",
-        latitude: 41.2995,
-        longitude: 69.2401,
-      });
-    }
-  }, [setLocation]);
 
   if (import.meta.env.VITE_ENV === "development") {
   import("eruda").then((eruda) => {

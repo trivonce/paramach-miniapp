@@ -23,23 +23,7 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const isOpen = controlledOpen !== undefined ? controlledOpen : uncontrolledOpen;
   const setIsOpen = onOpenChange || setUncontrolledOpen;
-  // const openMap = true;
-  const { setLocation, location } = useLocationStore();
-
-  // Request geolocation if location is not set and drawer is open
-  useEffect(() => {
-    if (isOpen && !location && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            address: '',
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        }
-      );
-    }
-  }, [isOpen, location, setLocation]);
+  const { setLocation } = useLocationStore();
 
   return (
     <Drawer disablePreventScroll open={isOpen} onOpenChange={setIsOpen} modal={true}>
