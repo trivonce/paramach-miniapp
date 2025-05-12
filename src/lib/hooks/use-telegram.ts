@@ -28,36 +28,31 @@ export function useTelegram() {
   const { setUser, setInitialized } = useUserStore();
 
   useEffect(() => {
-    const initTelegram = () => {
-      if (window.Telegram?.WebApp) {
-        const { WebApp } = window.Telegram;
-        
-        // Initialize the Telegram WebApp
-        WebApp.ready();
-        
-        // Expand the WebApp to full height
-        WebApp.expand();
-        
-        // Get user data from Telegram
-        const user = WebApp.initDataUnsafe.user;
-        if (user) {
-          setUser(user);
-        }
-        
+    if (window.Telegram?.WebApp) {
+      const { WebApp } = window.Telegram;
+      WebApp.ready();
+      WebApp.expand();
+      const user = WebApp.initDataUnsafe.user;
+      console.log("Telegram user from context:", user);
+      if (user) {
+        setUser(user);
+      }
+      setInitialized(true);
+    } else {
+      // Fallback for local development
+      if (import.meta.env.DEV) {
+        const mockUser = {
+          id: 123456,
+          first_name: "Dev",
+          last_name: "User",
+          username: "devuser",
+          language_code: "en",
+          photo_url: "",
+        };
+        setUser(mockUser);
         setInitialized(true);
       }
-    };
-
-    // Load Telegram WebApp script
-    const script = document.createElement("script");
-    script.src = "https://telegram.org/js/telegram-web-app.js";
-    script.async = true;
-    script.onload = initTelegram;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    }
   }, [setUser, setInitialized]);
 
   return {
