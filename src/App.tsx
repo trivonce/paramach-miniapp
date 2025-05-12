@@ -25,6 +25,12 @@ const App = () => {
   const { pathname } = useLocation();
   useTelegram();
 
+  if (import.meta.env.VITE_ENV === "development") {
+  import("eruda").then((eruda) => {
+    eruda.default.init();
+  });
+}
+
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Toaster position="top-center" />

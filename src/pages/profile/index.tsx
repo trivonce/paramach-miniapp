@@ -75,8 +75,8 @@ const ProfilePage = () => {
                 alt={user?.first_name || "@user"}
               />
               <AvatarFallback>
-                {user?.first_name?.[0]}
-                {user?.last_name?.[0]}
+                {user?.first_name?.[0] || "Dev"}
+                {user?.last_name?.[0] || "User"}
               </AvatarFallback>
             </Avatar>
             <input
@@ -96,10 +96,10 @@ const ProfilePage = () => {
 
           <div>
             <h1 className="text-xl font-semibold">
-              {user?.first_name} {user?.last_name}
+              {user?.first_name || "Dev"} {user?.last_name || "User"}
             </h1>
             <p className="dark:text-gray-400 text-tp-main">
-              {user?.username ? `@${user.username}` : ""}
+              {user?.id ? `@${user.id}` : "@default_id"}
             </p>
           </div>
         </div>
