@@ -61,6 +61,9 @@ export function useCreateOrder() {
       // Invalidate orders query to refetch the list
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
+    onError: (error) => {
+      console.error("Error creating order:", error);
+    },
   });
 }
 
