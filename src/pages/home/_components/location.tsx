@@ -13,6 +13,7 @@ import {
 import { MapPinHouse, MapPinIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Map from "./map";
+import { useLocationStore } from "@/lib/store/location-store";
 
 const locations = [
   {
@@ -28,6 +29,7 @@ const locations = [
 const Location = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMap, setOpenMap] = useState(false);
+  const { setLocation } = useLocationStore();
 
   return (
     <Drawer disablePreventScroll open={isOpen} onOpenChange={setIsOpen} modal={true}>
@@ -72,6 +74,10 @@ const Location = () => {
                 <div
                   key={id}
                   className="cursor-pointer p-3 dark:bg-gray-900 bg-gray-200 rounded-lg text-center hover:bg-gray-300 transition-all text-sm font-medium"
+                  onClick={() => {
+                    setLocation({ address });
+                    setIsOpen(false);
+                  }}
                 >
                   {address}
                 </div>

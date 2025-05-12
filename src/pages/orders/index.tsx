@@ -2,26 +2,29 @@
 
 import { useState } from "react"
 import {Link} from "react-router-dom"
-import { ChevronRight, ShoppingBag, Clock } from "lucide-react"
+import { ShoppingBag, Clock } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useOrders } from "@/lib/hooks/use-orders"
+import type { Order } from "@/lib/hooks/use-orders"
 
 export default function OrdersPage() {
   const [_activeTab, setActiveTab] = useState("active")
   const { data: orders = [], isLoading, isError } = useOrders();
 
+  console.log(orders)
+
   // Split orders into active and history
-  const activeOrders = orders.filter(order => ["pending", "processing", "delivering"].includes(order.status));
-  const orderHistory = orders.filter(order => ["delivered", "cancelled"].includes(order.status));
+  const activeOrders = orders.filter((order: Order) => ["pending", "processing"].includes(order.status));
+  const orderHistory = orders.filter((order: Order) => ["completed", "cancelled"].includes(order.status));
 
   return (
     <div className="flex flex-col min-h-screen bg-[#121212] pb-20">
       {/* Header */}
       <header className="p-4 bg-[#121212] border-b border-gray-800">
-        <h1 className="text-xl font-bold text-white">Buyurtmalar</h1>
+        <h1 className="text-lg font-bold text-white">Buyurtmalar</h1>
       </header>
 
       {/* Main Content */}
@@ -53,7 +56,7 @@ export default function OrdersPage() {
               </div>
             ) : activeOrders.length > 0 ? (
               <div className="space-y-4">
-                {activeOrders.map((order) => (
+                {activeOrders.map((order: Order) => (
                   <ActiveOrderCard key={order.id} order={order} />
                 ))}
               </div>
@@ -80,7 +83,7 @@ export default function OrdersPage() {
               </div>
             ) : orderHistory.length > 0 ? (
               <div className="space-y-4">
-                {orderHistory.map((order) => (
+                {orderHistory.map((order: Order) => (
                   <OrderHistoryCard key={order.id} order={order} />
                 ))}
               </div>
@@ -107,23 +110,22 @@ function ActiveOrderCard({ order }: any) {
       <div className="p-4 border-b border-gray-700">
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-white font-medium">#{order.id}</span>
+            <span className="text-white font-medium text-sm">#{order.id}</span>
             <Badge
               className={`
               ${order.status === "pending" ? "bg-yellow-500" : ""}
               ${order.status === "processing" ? "bg-blue-500" : ""}
-              ${order.status === "delivering" ? "bg-purple-500" : ""}
               text-white
             `}
             >
-              {order.statusText}
+              <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className="text-gray-400 text-sm">{order.date}</span>
+          <span className="text-gray-400 text-xs">{order.date}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-white">{order.restaurant}</span>
-          <span className="text-green-500 font-medium">{order.total} so'm</span>
+          <span className="text-white text-sm">{order.restaurant}</span>
+          <span className="text-green-500 font-medium text-sm">{order.total} so'm</span>
         </div>
       </div>
 
@@ -132,23 +134,20 @@ function ActiveOrderCard({ order }: any) {
           {order.items?.map((item: any, index: number) => (
             <div key={index} className="flex justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-white">{item.quantity}x</span>
-                <span className="text-white">{item.name}</span>
+                <span className="text-white text-xs">{item.quantity}x</span>
+                <span className="text-white text-xs">{item.name}</span>
               </div>
-              <span className="text-gray-400">{item.price} so'm</span>
+              <span className="text-gray-400 text-xs">{item.price} so'm</span>
             </div>
           ))}
         </div>
       </div>
 
       <div className="p-4 bg-gray-900 flex justify-between items-center">
-        <div>
-          <p className="text-gray-400 text-sm">Yetkazib berish vaqti</p>
-          <p className="text-white">{order.deliveryTime}</p>
+        <div className="flex items-center gap-2">
+          <p className="text-gray-400 text-xs">Yetkazib berish narxi:</p>
+          <p className="text-white text-xs">+20 000 so'm</p>
         </div>
-        {/* <Button variant="outline" className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
-          Kuzatish
-        </Button> */}
       </div>
     </div>
   )
@@ -160,22 +159,22 @@ function OrderHistoryCard({ order }: any) {
       <div className="p-4">
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-white font-medium">#{order.id}</span>
+            <span className="text-white font-medium text-sm">#{order.id}</span>
             <Badge
               className={`
-              ${order.status === "delivered" ? "bg-green-500" : ""}
+              ${order.status === "completed" ? "!bg-green-500" : ""}
               ${order.status === "cancelled" ? "bg-red-500" : ""}
               text-white
             `}
             >
-              {order.statusText}
+              <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className="text-gray-400 text-sm">{order.date}</span>
+          <span className="text-gray-400 text-xs">{order.date}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-white">{order.restaurant}</span>
-          <span className="text-green-500 font-medium">{order.total} so'm</span>
+          <span className="text-white text-sm">{order.restaurant}</span>
+          <span className="text-green-500 font-medium text-sm">{order.total} so'm</span>
         </div>
       </div>
 

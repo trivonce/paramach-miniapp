@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { ArrowLeft, Banknote, MapPin, Clock, ChevronRight, CheckCircle2 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { useCartStore } from "@/lib/store/cart-store"
+import { useCartStore } from "@/lib/store/cart"
 import { formatPrice } from "@/lib/utils"
 import { useCreateOrder } from "@/lib/hooks/use-orders"
 
@@ -64,15 +64,15 @@ export default function CheckoutPage() {
         <Button onClick={() => navigate(-1)} variant="ghost" size="icon" className="text-white mr-2 bg-gray-800 size-8">
           <ArrowLeft className="h-6 w-6" />
         </Button>
-        <h1 className="text-xl font-bold text-white ml-1">Buyurtmani tasdiqlash</h1>
+        <h1 className="text-lg font-bold text-white ml-1">Buyurtmani tasdiqlash</h1>
       </header>
 
       {/* Main Content */}
       <main className="flex-1 p-4">
         {/* Restaurant Info */}
         <div className="bg-gray-800 rounded-lg p-4 mb-4">
-          <h2 className="text-white font-medium text-lg mb-1">Sergeli Paramach</h2>
-          <p className="text-gray-400 text-sm">30-40 daqiqa</p>
+          <h2 className="text-white font-medium text-base mb-1">Sergeli Paramach</h2>
+          <p className="text-gray-400 text-xs">30-40 daqiqa</p>
         </div>
 
         {/* Order Items */}
@@ -83,10 +83,10 @@ export default function CheckoutPage() {
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-white">{item.quantity}x</span>
-                    <span className="text-white">{item.name}</span>
+                    <span className="text-white text-xs">{item.quantity}x</span>
+                    <span className="text-white text-xs">{item.name}</span>
                   </div>
-                  <span className="text-gray-400">{formatPrice(item.price * item.quantity)}</span>
+                  <span className="text-gray-400 text-xs">{formatPrice(item.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
@@ -100,8 +100,8 @@ export default function CheckoutPage() {
             <div className="flex items-start gap-3">
               <MapPin className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-white">Toshkent sh. Yunusobod tumani, Sh. Rustaveli ko'chasi 12</p>
-                <p className="text-gray-400 text-sm mt-1">Uy, kvartira: 42</p>
+                <p className="text-white text-sm">Toshkent sh. Yunusobod tumani, Sh. Rustaveli ko'chasi 12</p>
+                <p className="text-gray-400 text-xs mt-1">Uy, kvartira: 42</p>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function CheckoutPage() {
               <Clock className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-gray-400 text-sm">Yetkazib berish vaqti</p>
-                <p className="text-white">30-40 daqiqa</p>
+                <p className="text-white text-xs">30-40 daqiqa</p>
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function CheckoutPage() {
                 <RadioGroupItem value="cash" id="cash" className="border-green-500 text-green-500" />
                 <Label htmlFor="cash" className="flex items-center gap-2 cursor-pointer">
                   <Banknote className="h-5 w-5 text-gray-400" />
-                  <span className="text-white">Naqd pul</span>
+                  <span className="text-white text-sm">Naqd pul</span>
                 </Label>
               </div>
             </RadioGroup>
@@ -149,17 +149,17 @@ export default function CheckoutPage() {
             <h2 className="text-white font-medium mb-3">To'lov ma'lumotlari</h2>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-400">Mahsulotlar narxi</span>
-                <span className="text-white">{formatPrice(total)}</span>
+                <span className="text-gray-400 text-xs">Mahsulotlar narxi</span>
+                <span className="text-white text-xs">{formatPrice(total)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Yetkazib berish</span>
-                <span className="text-white">{formatPrice(deliveryFee)}</span>
+                <span className="text-gray-400 text-xs">Yetkazib berish</span>
+                <span className="text-white text-xs">{formatPrice(deliveryFee)}</span>
               </div>
               <Separator className="my-2 bg-gray-700" />
               <div className="flex justify-between">
-                <span className="text-white font-medium">Jami</span>
-                <span className="text-green-500 font-medium">{formatPrice(total + deliveryFee)}</span>
+                <span className="text-white font-medium text-sm">Jami</span>
+                <span className="text-green-500 font-medium text-sm">{formatPrice(total + deliveryFee)}</span>
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
 
         {/* Confirm Button */}
         <Button
-          className="w-full bg-green-500 hover:bg-green-600 text-white h-12 text-md"
+          className="w-full bg-green-500 hover:bg-green-600 text-white h-11 text-sm"
           onClick={handleConfirmOrder}
           disabled={createOrder.isPending}
         >

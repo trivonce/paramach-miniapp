@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import notFoundLottie from '@/assets/lotties/not_found.json'
-import PopularProducts from "@/components/popular-products";
+// import PopularProducts from "@/components/popular-products";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -16,9 +16,9 @@ const EmptyCart = () => {
             <Button onClick={() => navigate('/')} className="mt-4 w-full">Bosh sahifa</Button>
         </div>
 
-        <div className="mt-5">
+        {/* <div className="mt-5">
             <PopularProducts />
-        </div>
+        </div> */}
     </div>
 }
 
