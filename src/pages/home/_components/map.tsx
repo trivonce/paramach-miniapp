@@ -6,9 +6,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { MapPinPlusInside } from "lucide-react";
 
-const YandexMap = () => {
+interface YandexMapProps {
+  onSelectLocation?: (location: { latitude: number; longitude: number; address: string }) => void;
+}
+
+const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
-  const [_coords, setCoords] = useState<[number, number] | null>(null);
+  const [coords, setCoords] = useState<[number, number] | null>(null);
   const [locationName, setLocationName] = useState<string>("Fetching location...");
   const [_error, setError] = useState<string | null>(null);
 
@@ -115,7 +119,18 @@ const YandexMap = () => {
       {/* Bottom Section */}
       <div className="dark:bg-gray-900 bg-white px-4 rounded-t-2xl fixed bottom-0 left-0 w-full py-3 z-[1] font-medium">
         <h1 className="text-center mb-3 text-sm leading-5">{locationName}</h1>
-        <Button className="w-full h-12">
+        <Button
+          className="w-full h-12"
+          onClick={() => {
+            if (coords && locationName && onSelectLocation) {
+              onSelectLocation({
+                latitude: coords[0],
+                longitude: coords[1],
+                address: locationName,
+              });
+            }
+          }}
+        >
           <MapPinPlusInside size={20} className="shrink-0" />
           Qo'shish
         </Button>

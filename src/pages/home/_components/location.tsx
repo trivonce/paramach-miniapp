@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Drawer,
@@ -26,15 +26,37 @@ const locations = [
   },
 ];
 
-const Location = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [openMap, setOpenMap] = useState(false);
-  const { setLocation } = useLocationStore();
+interface LocationProps {
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const isOpen = controlledOpen !== undefined ? controlledOpen : uncontrolledOpen;
+  const setIsOpen = onOpenChange || setUncontrolledOpen;
+  const openMap = true; // Always show map, not saved locations
+  const { setLocation, location } = useLocationStore();
+
+  // Request geolocation if location is not set and drawer is open
+  useEffect(() => {
+    if (isOpen && !location && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            address: '',
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        }
+      );
+    }
+  }, [isOpen, location, setLocation]);
 
   return (
     <Drawer disablePreventScroll open={isOpen} onOpenChange={setIsOpen} modal={true}>
       <DrawerTrigger asChild>
-        <button className="bg-brand text-white rounded-2xl px-3 active:scale-90 duration-200 py-3">
+        <button className="bg-brand text-white rounded-2xl px-3 active:scale-90 duration-200 py-3" onClick={() => setIsOpen(true)}>
           <div className="flex items-center gap-1 justify-center mb-1">
             <MapPinIcon size={14} className="shrink-0" />
             <h1 className="text-center text-sm">Joriy manzil</h1>
@@ -53,45 +75,11 @@ const Location = () => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <AnimatePresence mode="wait">
-          {openMap ? (
-            <Map key={"map"} />
-          ) : (
-            <motion.div
-              key={"locations"}
-              initial={false}
-              animate={{
-                opacity: 1,
-                x: 0,
-              }}
-              exit={{
-                opacity: 0,
-                x: -50,
-              }}
-              className="space-y-2 px-4 pb-4 max-h-[500px] overflow-y-auto"
-            >
-              {locations.map(({ id, address }) => (
-                <div
-                  key={id}
-                  className="cursor-pointer p-3 dark:bg-gray-900 bg-gray-200 rounded-lg text-center hover:bg-gray-300 transition-all text-sm font-medium"
-                  onClick={() => {
-                    setLocation({ address });
-                    setIsOpen(false);
-                  }}
-                >
-                  {address}
-                </div>
-              ))}
-              <Button
-                onClick={() => setOpenMap(!openMap)}
-                className="w-full h-12"
-              >
-                <MapPinHouse size={20} className="shrink-0" />
-                Manzil qo'shish
-              </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Only show map, not saved locations */}
+        <Map key={"map"} onSelectLocation={(loc) => {
+          setLocation(loc);
+          setIsOpen(false);
+        }} />
       </DrawerContent>
     </Drawer>
   );
