@@ -13,6 +13,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { motion } from "framer-motion";
 import SettingsDrawer from "./_components/settings-drawer";
 import AboutUsDrawer from "./_components/about-us-drawer";
+import { useUserStore } from "@/lib/store/user-store";
 
 const settings = [
   {
@@ -47,6 +48,7 @@ const settings = [
 ];
 
 const ProfilePage = () => {
+  const user = useUserStore((state) => state.user);
   return (
     <motion.div
       initial={{
@@ -69,10 +71,13 @@ const ProfilePage = () => {
           <span className="relative">
             <Avatar className="w-24 h-24">
               <AvatarImage
-                src="https://avatar.iran.liara.run/public/38"
-                alt="@shadcn"
+                src={user?.photo_url || "https://avatar.iran.liara.run/public/38"}
+                alt={user?.first_name || "@user"}
               />
-              <AvatarFallback>UT</AvatarFallback>
+              <AvatarFallback>
+                {user?.first_name?.[0]}
+                {user?.last_name?.[0]}
+              </AvatarFallback>
             </Avatar>
             <input
               accept="image/*"
@@ -90,8 +95,12 @@ const ProfilePage = () => {
           </span>
 
           <div>
-            <h1 className="text-xl font-semibold">Ulugbek Temirov</h1>
-            <p className="dark:text-gray-400 text-tp-main">+998 93 656 36 72</p>
+            <h1 className="text-xl font-semibold">
+              {user?.first_name} {user?.last_name}
+            </h1>
+            <p className="dark:text-gray-400 text-tp-main">
+              {user?.username ? `@${user.username}` : ""}
+            </p>
           </div>
         </div>
 

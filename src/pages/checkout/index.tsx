@@ -29,8 +29,8 @@ export default function CheckoutPage() {
 
   const handleConfirmOrder = async () => {
     const orderData = {
-      address: "123 Main Street, Tashkent", // This should come from user input
-      phone_number: "+998901234567", // This should come from user input
+      address: "123 Main Street, Tashkent",
+      phone_number: "+998901234567",
       latitude: 41.299496,
       longitude: 69.240073,
       items: items.map(item => ({
@@ -39,10 +39,13 @@ export default function CheckoutPage() {
       }))
     }
 
+    // Debug log for production error
+    console.log("Creating order with:", { orderData, telegram_id: "7468341931" });
+
     try {
       await createOrder.mutateAsync({ 
         orderData,
-        telegram_id: "7468341931" // This should come from user context or config
+        telegram_id: "7468341931"
       })
       clearCart()
       setShowSuccess(true)
