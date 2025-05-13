@@ -140,7 +140,7 @@ function ActiveOrderCard({ order, t }: any) {
                 <span className="text-white text-xs">{item.quantity}x</span>
                 <span className="text-white text-xs">{item.name}</span>
               </div>
-              <span className="text-gray-400 text-xs">{item.price} so'm</span>
+              <span className="text-gray-400 text-xs">{item.price} {t('currency')}</span>
             </div>
           ))}
         </div>
@@ -149,7 +149,7 @@ function ActiveOrderCard({ order, t }: any) {
       <div className="p-4 bg-gray-900 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <p className="text-gray-400 text-xs">{t('orders_delivery_price')}</p>
-          <p className="text-white text-xs">+20 000 so'm</p>
+          <p className="text-white text-xs">+20 000 {t('currency')}</p>
         </div>
       </div>
     </div>
