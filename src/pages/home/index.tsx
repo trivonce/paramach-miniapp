@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocationStore } from "@/lib/store/location-store";
-import { useTranslation } from 'react-i18next';
 
 // components
 import Location from "./_components/location";
@@ -12,7 +11,6 @@ import Products from "./_components/products";
 const HomePage = () => {
   const location = useLocationStore((state) => state.location);
   const [locationDrawerOpen, setLocationDrawerOpen] = useState(false);
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (!location) {

@@ -9,7 +9,6 @@ import {
   Clock,
   ChevronRight,
   CheckCircle2,
-  LocateIcon,
   MapIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";

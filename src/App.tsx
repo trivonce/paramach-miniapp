@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-import { AnimatePresence } from "framer-motion";
 import { Toaster } from 'sonner';
 
 // pages
