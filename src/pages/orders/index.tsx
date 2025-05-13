@@ -124,7 +124,7 @@ function ActiveOrderCard({ order, t }: any) {
               <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className="text-gray-400 text-xs">{formatDate(order.date)}</span>
+          <span className="text-gray-400 text-xs">{order.date}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-white text-sm">{order.restaurant}</span>
