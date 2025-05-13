@@ -130,7 +130,7 @@ function ActiveOrderCard({ order, t }: any) {
               <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className=" dark:text-gray-400 text-gray-500 text-xs">{formatDate(order.date)}</span>
+          <span className=" dark:text-gray-400 text-gray-500 text-xs">{order.date}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className=" dark:text-white text-gray-900 text-sm">{order.restaurant}</span>
@@ -143,10 +143,10 @@ function ActiveOrderCard({ order, t }: any) {
           {order.items?.map((item: any, index: number) => (
             <div key={index} className="flex justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-white text-xs">{item.quantity}x</span>
-                <span className="text-white text-xs">{item.name}</span>
+                <span className="dark:text-white text-gray-900 text-xs">{item.quantity}x</span>
+                <span className="dark:text-white text-gray-900 text-xs">{item.name}</span>
               </div>
-              <span className="text-gray-400 text-xs">{item.price} {t('currency')}</span>
+              <span className="dark:text-gray-400 text-gray-500 text-xs">{item.price} {t('currency')}</span>
             </div>
           ))}
         </div>
