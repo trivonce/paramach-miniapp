@@ -99,7 +99,7 @@ const ProfilePage = () => {
 
           <div>
             <h1 className="text-xl font-semibold">
-              {user?.first_name || t('profile_dev_name')} {user?.last_name || t('profile_dev_lastname')}
+              {user?.first_name || t('profile_dev_name')} {user?.last_name}
             </h1>
             <p className="dark:text-gray-400 text-tp-main">
               {user?.id ? `@${user.id}` : t('profile_default_id')}

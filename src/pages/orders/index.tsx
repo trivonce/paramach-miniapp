@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useOrders } from "@/lib/hooks/use-orders"
 import type { Order } from "@/lib/hooks/use-orders"
+import { formatDate, formatPrice } from '@/lib/utils'
 
 export default function OrdersPage() {
   const [_activeTab, setActiveTab] = useState("active")
@@ -86,7 +87,7 @@ export default function OrdersPage() {
             ) : orderHistory.length > 0 ? (
               <div className="space-y-4">
                 {orderHistory.map((order: Order) => (
-                  <OrderHistoryCard key={order.id} order={order} />
+                  <OrderHistoryCard key={order.id} order={order} t={t} />
                 ))}
               </div>
             ) : (
@@ -123,11 +124,11 @@ function ActiveOrderCard({ order, t }: any) {
               <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className="text-gray-400 text-xs">{order.date}</span>
+          <span className="text-gray-400 text-xs">{formatDate(order.date)}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-white text-sm">{order.restaurant}</span>
-          <span className="text-green-500 font-medium text-sm">{order.total} so'm</span>
+          <span className="text-green-500 font-medium text-sm">{formatPrice(order.total)} {t('currency')}</span>
         </div>
       </div>
 
@@ -155,7 +156,7 @@ function ActiveOrderCard({ order, t }: any) {
   )
 }
 
-function OrderHistoryCard({ order }: any) {
+function OrderHistoryCard({ order, t }: any) {
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden">
       <div className="p-4">
@@ -172,11 +173,11 @@ function OrderHistoryCard({ order }: any) {
               <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className="text-gray-400 text-xs">{order.date}</span>
+          <span className="text-gray-400 text-xs">{formatDate(order.date)}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-white text-sm">{order.restaurant}</span>
-          <span className="text-green-500 font-medium text-sm">{order.total} so'm</span>
+          <span className="text-green-500 font-medium text-sm">{formatPrice(order.total)} {t('currency')}</span>
         </div>
       </div>
 

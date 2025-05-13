@@ -79,5 +79,6 @@
   "orders_no_history": "История заказов пуста",
   "orders_no_history_desc": "Вы еще не сделали ни одного заказа",
   "orders_order_btn": "Сделать заказ",
-  "orders_delivery_price": "Стоимость доставки:"
+  "orders_delivery_price": "Стоимость доставки:",
+  "currency": "сум"
 } 

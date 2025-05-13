@@ -79,5 +79,6 @@
   "orders_no_history": "Buyurtmalar tarixi bo'sh",
   "orders_no_history_desc": "Siz hali buyurtma bermadingiz",
   "orders_order_btn": "Buyurtma berish",
-  "orders_delivery_price": "Yetkazib berish narxi:"
+  "orders_delivery_price": "Yetkazib berish narxi:",
+  "currency": "so'm"
 } 
