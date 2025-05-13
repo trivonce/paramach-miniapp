@@ -5,47 +5,31 @@ import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { MapPinPlusInside } from "lucide-react";
+import { useLocationStore } from "@/lib/store/location-store";
 
 interface YandexMapProps {
   onSelectLocation?: (location: { latitude: number; longitude: number; address: string }) => void;
 }
 
 const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
+  const location = useLocationStore((state) => state.location);
+  const getCurrentLocation = useLocationStore((state) => state.getCurrentLocation);
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
   const [coords, setCoords] = useState<[number, number] | null>(null);
   const [locationName, setLocationName] = useState<string>("Fetching location...");
-  const [_error, setError] = useState<string | null>(null);
 
-  const getCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      setError("Geolocation is not supported by your browser.");
-      toast.error("Geolocation is not supported by your browser.");
-      setDefaultLocation();
-      return;
+  // Set initial map center from store location
+  useEffect(() => {
+    if (location && location.latitude && location.longitude) {
+      setMapCenter([location.latitude, location.longitude]);
+      setCoords([location.latitude, location.longitude]);
+      setLocationName(location.address);
+    } else {
+      setMapCenter([41.2995, 69.2401]);
+      setCoords([41.2995, 69.2401]);
+      setLocationName("Fetching location...");
     }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const newCoords: [number, number] = [position.coords.latitude, position.coords.longitude];
-        setMapCenter(newCoords);
-        setCoords(newCoords);
-        fetchLocationName(newCoords);
-      },
-      (error) => {
-        console.error("Error getting location:", error);
-        setError("Geolocation not allowed. Using default location.");
-        toast.error("Geolocation not allowed. Using default location.");
-        setDefaultLocation();
-      }
-    );
-  };
-
-  const setDefaultLocation = () => {
-    const defaultCoords: [number, number] = [41.2995, 69.2401]; 
-    setMapCenter(defaultCoords);
-    setCoords(defaultCoords);
-    fetchLocationName(defaultCoords);
-  };
+  }, [location]);
 
   const fetchLocationName = async ([lat, lon]: [number, number]) => {
     try {
@@ -57,7 +41,6 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
       const name = geoObject?.metaDataProperty?.GeocoderMetaData?.text || "Unknown location";
       setLocationName(name);
     } catch (error) {
-      console.error("Failed to fetch location name", error);
       setLocationName("Location not found");
     }
   };
@@ -67,24 +50,6 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
     setCoords([newCenter[0], newCenter[1]]);
     fetchLocationName([newCenter[0], newCenter[1]]);
   };
-
-  useEffect(() => {
-    if (navigator.permissions) {
-      navigator.permissions.query({ name: "geolocation" }).then((result) => {
-        if (result.state === "granted") {
-          getCurrentLocation();
-        } else if (result.state === "prompt") {
-          getCurrentLocation();
-        } else if (result.state === "denied") {
-          setError("Geolocation not allowed. Using default location.");
-          toast.error("Geolocation not allowed. Using default location.");
-          setDefaultLocation();
-        }
-      });
-    } else {
-      getCurrentLocation();
-    }
-  }, []);
 
   return (
     <motion.div
@@ -110,6 +75,15 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <span className="icon icon-pin !w-8 !h-8 !bg-red-600" />
             </div>
+            {/* Get Current Location Button */}
+            <Button
+              className="absolute top-4 right-4 z-10 bg-white text-black border border-gray-300 hover:bg-gray-100"
+              variant="outline"
+              onClick={getCurrentLocation}
+            >
+              <MapPinPlusInside size={18} className="mr-2" />
+              Get Current Location
+            </Button>
           </div>
         ) : (
           <Skeleton className="h-[400px] w-full" />

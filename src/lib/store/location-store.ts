@@ -10,13 +10,66 @@ export interface Location {
 interface LocationStore {
   location: Location | null;
   setLocation: (location: Location) => void;
+  getCurrentLocation: () => Promise<void>;
 }
 
 export const useLocationStore = create<LocationStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       location: null,
       setLocation: (location) => set({ location }),
+      getCurrentLocation: async () => {
+        if (get().location) return; // Only get once per session
+        if (!navigator.geolocation) {
+          set({
+            location: {
+              address: "Geolocation is not supported by your browser.",
+              latitude: 41.2995,
+              longitude: 69.2401,
+            },
+          });
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            // Fetch address from Yandex
+            try {
+              const response = await fetch(
+                `https://geocode-maps.yandex.ru/1.x/?apikey=${import.meta.env.VITE_YANDEX_MAP_API_KEY}&geocode=${longitude},${latitude}&format=json&lang=uz_UZ`
+              );
+              const data = await response.json();
+              const geoObject = data.response.GeoObjectCollection.featureMember[0]?.GeoObject;
+              const address = geoObject?.metaDataProperty?.GeocoderMetaData?.text || "Unknown location";
+              set({
+                location: {
+                  address,
+                  latitude,
+                  longitude,
+                },
+              });
+            } catch {
+              set({
+                location: {
+                  address: "Location not found",
+                  latitude,
+                  longitude,
+                },
+              });
+            }
+          },
+          () => {
+            set({
+              location: {
+                address: "Geolocation not allowed. Using default location.",
+                latitude: 41.2995,
+                longitude: 69.2401,
+              },
+            });
+          }
+        );
+      },
     }),
     { name: "location-storage" }
   )
