@@ -152,7 +152,7 @@ function ActiveOrderCard({ order, t }: any) {
         </div>
       </div>
 
-      <div className="p-4 dark:bg-gray-900 bg-gray-200 flex justify-between items-center">
+      <div className="p-4 dark:bg-gray-900 bg-gray-100 shadow-sm flex justify-between items-center">
         <div className="flex items-center gap-2">
           <p className=" dark:text-gray-400 text-gray-500 text-xs">{t('orders_delivery_price')}</p>
           <p className=" dark:text-white text-gray-900 text-xs">+20 000 {t('currency')}</p>
