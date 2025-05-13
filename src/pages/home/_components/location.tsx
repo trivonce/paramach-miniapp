@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import { AnimatePresence, motion } from "framer-motion";
 import {
   Drawer,
@@ -25,12 +25,6 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
   const setIsOpen = onOpenChange || setUncontrolledOpen;
   const location = useLocationStore((state) => state.location);
   const setLocation = useLocationStore((state) => state.setLocation);
-  const getCurrentLocation = useLocationStore((state) => state.getCurrentLocation);
-
-  useEffect(() => {
-    getCurrentLocation();
-    // Only run once on mount
-  }, []);
 
   return (
     <Drawer disablePreventScroll open={isOpen} onOpenChange={setIsOpen} modal={true}>
