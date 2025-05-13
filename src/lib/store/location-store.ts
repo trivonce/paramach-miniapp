@@ -15,11 +15,11 @@ interface LocationStore {
 
 export const useLocationStore = create<LocationStore>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       location: null,
       setLocation: (location) => set({ location }),
       getCurrentLocation: async () => {
-        if (get().location) return; // Only get once per session
+        // if (get().location) return; // Always get location on app load
         if (!navigator.geolocation) {
           set({
             location: {
