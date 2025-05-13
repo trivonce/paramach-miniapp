@@ -13,7 +13,7 @@ interface YandexMapProps {
 
 const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
   const location = useLocationStore((state) => state.location);
-  const getCurrentLocation = useLocationStore((state) => state.getCurrentLocation);
+  // const getCurrentLocation = useLocationStore((state) => state.getCurrentLocation);
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
   const [coords, setCoords] = useState<[number, number] | null>(null);
   const [locationName, setLocationName] = useState<string>("Fetching location...");
@@ -76,14 +76,14 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
               <span className="icon icon-pin !w-8 !h-8 !bg-red-600" />
             </div>
             {/* Get Current Location Button */}
-            <Button
+            {/* <Button
               className="absolute top-4 right-4 z-10 bg-white text-black border border-gray-300 hover:bg-gray-100"
               variant="outline"
               onClick={getCurrentLocation}
             >
               <MapPinPlusInside size={18} className="mr-2" />
               Get Current Location
-            </Button>
+            </Button> */}
           </div>
         ) : (
           <Skeleton className="h-[400px] w-full" />
