@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import { MapPinPlusInside } from "lucide-react";
 import { useLocationStore } from "@/lib/store/location-store";
 
