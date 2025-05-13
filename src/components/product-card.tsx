@@ -1,5 +1,6 @@
 import { formatPrice } from "@/lib/utils";
 import AddButton from "./add-button";
+import { t } from "i18next";
 
 type Props = {
     id?: number;
@@ -24,7 +25,7 @@ const ProductCard = (props: Props) => {
 
       <div className="px-3 py-2">
         <h1 className="text-tp-main font-medium line-clamp-2 text-sm leading-4 h-8">{name || 'Placeholder'}</h1>
-        <p className="text-sm mt-1">{formatPrice(price || 0)}</p>
+        <p className="text-sm mt-1">{formatPrice(price || 0)} {t('currency')}</p>
 
         <AddButton 
           id={id}
