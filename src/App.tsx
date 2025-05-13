@@ -41,7 +41,7 @@ const App = () => {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Toaster position="top-center" />
-      <AnimatePresence mode="wait">
+      {/* <AnimatePresence mode="wait"> */}
           <Routes location={pathname} key={pathname}>
             <Route index path="/" element={<HomePage />} />
             <Route index path="/cart" element={<BasketPage />} />
@@ -49,7 +49,7 @@ const App = () => {
             <Route index path="/profile" element={<ProfilePage />} />
             <Route index path="/checkout" element={<CheckoutPage />} />
           </Routes>
-      </AnimatePresence>
+      {/* </AnimatePresence> */}
       <MenuBar />
     </ThemeProvider>
   );

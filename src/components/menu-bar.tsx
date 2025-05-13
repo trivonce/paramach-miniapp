@@ -1,6 +1,6 @@
 import { HomeIcon, ShoppingBasketIcon, TableOfContentsIcon, UserIcon } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
-import { useCartStore } from "../lib/store/cart-store";
+import { useCartStore } from "@/lib/store/cart";
 
 const menu = [
   {
@@ -33,7 +33,7 @@ const MenuBar = () => {
   const { pathname } = useLocation();
   const items = useCartStore((state: { items: any[] }) => state.items);
 
-  if (pathname === "/cart" || pathname === "/checkout") return null;
+  if ((pathname === "/cart" && items.length !== 0) || pathname === "/checkout") return null;
 
   return (
     <div className="fixed bottom-0 left-0 px-2 pb-2 w-full bg-transparent z-40 ">

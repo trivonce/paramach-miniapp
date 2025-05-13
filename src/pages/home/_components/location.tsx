@@ -29,7 +29,7 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
   return (
     <Drawer disablePreventScroll open={isOpen} onOpenChange={setIsOpen} modal={true}>
       <DrawerTrigger asChild>
-        <button className="bg-brand text-white rounded-2xl px-3 active:scale-90 duration-200 py-3" onClick={() => setIsOpen(true)}>
+        <button className="bg-brand text-white rounded-2xl px-3 active:scale-90 duration-200 py-3 w-full" onClick={() => setIsOpen(true)}>
           <div className="flex items-center gap-1 justify-center mb-1">
             <MapPinIcon size={14} className="shrink-0" />
             <h1 className="text-center text-sm">Joriy manzil</h1>

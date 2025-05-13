@@ -8,15 +8,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@radix-ui/react-label";
+import { useTranslation } from 'react-i18next';
 
 const languages = [
   {
     id: "uz",
     name: "Uzbek",
-  },
-  {
-    id: "en",
-    name: "English",
   },
   {
     id: "ru",
@@ -28,10 +25,11 @@ export const LanguageSelect = React.forwardRef<
   HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof Select>
 >(({ ...props }, ref) => {
+  const { i18n } = useTranslation();
   return (
     <div className="space-y-1">
       <Label className="text-sm">Tilni tanlang</Label>
-      <Select defaultValue="uz" {...props}>
+      <Select defaultValue={i18n.language} onValueChange={i18n.changeLanguage} {...props}>
         <SelectTrigger ref={ref}>
           <SelectValue placeholder="Tilni tanlang" />
         </SelectTrigger>

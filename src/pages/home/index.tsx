@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocationStore } from "@/lib/store/location-store";
+import { useTranslation } from 'react-i18next';
 
 // components
 import Location from "./_components/location";
-import AdBanner from "./_components/ad-banner";
+// import AdBanner from "./_components/ad-banner";
 // import PopularProducts from "@/components/popular-products";
 import Products from "./_components/products";
 
 const HomePage = () => {
   const location = useLocationStore((state) => state.location);
   const [locationDrawerOpen, setLocationDrawerOpen] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!location) {
@@ -29,7 +31,8 @@ const HomePage = () => {
       className="container py-3 pb-20"
     >
       <Location isOpen={locationDrawerOpen} onOpenChange={setLocationDrawerOpen} />
-      <AdBanner />
+      {/* <AdBanner /> */}
+      <div className="mb-2 font-bold text-lg">{t('hello')}</div>
       {/* <PopularProducts /> */}
       <Products />
     </motion.main>
