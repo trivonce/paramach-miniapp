@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { toast } from "sonner";
 
 export interface Location {
   address: string;
@@ -62,11 +63,12 @@ export const useLocationStore = create<LocationStore>()(
           () => {
             set({
               location: {
-                address: "Geolocation not allowed. Using default location.",
+                address: "Toshkent, O'zbekiston",
                 latitude: 41.2995,
                 longitude: 69.2401,
               },
             });
+            toast.error("Geolocation not allowed. Using default location.");
           }
         );
       },

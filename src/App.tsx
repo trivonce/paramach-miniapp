@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 import { AnimatePresence } from "framer-motion";
 import { Toaster } from 'sonner';
@@ -20,10 +21,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { ThemeProvider } from "./components/theme-provider";
 import { useTelegram } from "./lib/hooks/use-telegram";
+import { useLocationStore } from "./lib/store/location-store";
 
 const App = () => {
   const { pathname } = useLocation();
   useTelegram();
+  const getCurrentLocation = useLocationStore((state) => state.getCurrentLocation);
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
 
   if (import.meta.env.VITE_ENV === "development") {
   import("eruda").then((eruda) => {

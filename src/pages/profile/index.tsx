@@ -76,7 +76,7 @@ const ProfilePage = () => {
               />
               <AvatarFallback>
                 {user?.first_name?.[0] || "Dev"}
-                {user?.last_name?.[0] || "User"}
+                {user?.last_name?.[0]}
               </AvatarFallback>
             </Avatar>
             <input
