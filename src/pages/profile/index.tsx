@@ -6,9 +6,9 @@ import {
   SettingsIcon,
   LogOutIcon,
   ChevronRight,
-  CircleUserRound,
+  // CircleUserRound,
 } from "lucide-react";
-import PersonalInformationDrawer from "./_components/personal-information-drawer";
+// import PersonalInformationDrawer from "./_components/personal-information-drawer";
 import { Slot } from "@radix-ui/react-slot";
 import { motion } from "framer-motion";
 import SettingsDrawer from "./_components/settings-drawer";
