@@ -3,6 +3,7 @@
 import { useState } from "react"
 import {Link} from "react-router-dom"
 import { ShoppingBag, Clock } from "lucide-react"
+import { useTranslation } from 'react-i18next'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
@@ -12,6 +13,7 @@ import type { Order } from "@/lib/hooks/use-orders"
 
 export default function OrdersPage() {
   const [_activeTab, setActiveTab] = useState("active")
+  const { t } = useTranslation();
   const { data: orders = [], isLoading, isError } = useOrders();
 
   console.log(orders)
@@ -24,7 +26,7 @@ export default function OrdersPage() {
     <div className="flex flex-col min-h-screen bg-[#121212] pb-20">
       {/* Header */}
       <header className="p-4 bg-[#121212] border-b border-gray-800">
-        <h1 className="text-lg font-bold text-white">Buyurtmalar</h1>
+        <h1 className="text-lg font-bold text-white">{t('orders_title')}</h1>
       </header>
 
       {/* Main Content */}
@@ -35,38 +37,38 @@ export default function OrdersPage() {
               value="active"
               className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
             >
-              Faol buyurtmalar
+              {t('orders_active')}
             </TabsTrigger>
             <TabsTrigger
               value="history"
               className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
             >
-              Buyurtmalar tarixi
+              {t('orders_history')}
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="active" className="mt-4">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-10 text-center">
-                <span className="text-white">Yuklanmoqda...</span>
+                <span className="text-white">{t('orders_loading')}</span>
               </div>
             ) : isError ? (
               <div className="flex flex-col items-center justify-center py-10 text-center">
-                <span className="text-red-500">Buyurtmalarni yuklashda xatolik yuz berdi</span>
+                <span className="text-red-500">{t('orders_error')}</span>
               </div>
             ) : activeOrders.length > 0 ? (
               <div className="space-y-4">
                 {activeOrders.map((order: Order) => (
-                  <ActiveOrderCard key={order.id} order={order} />
+                  <ActiveOrderCard key={order.id} order={order} t={t} />
                 ))}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-10 text-center">
                 <ShoppingBag className="w-16 h-16 text-gray-500 mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">Faol buyurtmalar yo'q</h3>
-                <p className="text-gray-400 mb-6">Hozirda faol buyurtmalaringiz yo'q</p>
+                <h3 className="text-lg font-medium text-white mb-2">{t('orders_no_active')}</h3>
+                <p className="text-gray-400 mb-6">{t('orders_no_active_desc')}</p>
                 <Link to="/">
-                  <Button className="bg-green-500 hover:bg-green-600 text-white">Buyurtma berish</Button>
+                  <Button className="bg-green-500 hover:bg-green-600 text-white">{t('orders_order_btn')}</Button>
                 </Link>
               </div>
             )}
@@ -75,11 +77,11 @@ export default function OrdersPage() {
           <TabsContent value="history" className="mt-4">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-10 text-center">
-                <span className="text-white">Yuklanmoqda...</span>
+                <span className="text-white">{t('orders_loading')}</span>
               </div>
             ) : isError ? (
               <div className="flex flex-col items-center justify-center py-10 text-center">
-                <span className="text-red-500">Buyurtmalarni yuklashda xatolik yuz berdi</span>
+                <span className="text-red-500">{t('orders_error')}</span>
               </div>
             ) : orderHistory.length > 0 ? (
               <div className="space-y-4">
@@ -90,10 +92,10 @@ export default function OrdersPage() {
             ) : (
               <div className="flex flex-col items-center justify-center py-10 text-center">
                 <Clock className="w-16 h-16 text-gray-500 mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">Buyurtmalar tarixi bo'sh</h3>
-                <p className="text-gray-400 mb-6">Siz hali buyurtma bermadingiz</p>
+                <h3 className="text-lg font-medium text-white mb-2">{t('orders_no_history')}</h3>
+                <p className="text-gray-400 mb-6">{t('orders_no_history_desc')}</p>
                 <Link to="/">
-                  <Button className="bg-green-500 hover:bg-green-600 text-white">Buyurtma berish</Button>
+                  <Button className="bg-green-500 hover:bg-green-600 text-white">{t('orders_order_btn')}</Button>
                 </Link>
               </div>
             )}
@@ -104,7 +106,7 @@ export default function OrdersPage() {
   )
 }
 
-function ActiveOrderCard({ order }: any) {
+function ActiveOrderCard({ order, t }: any) {
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden">
       <div className="p-4 border-b border-gray-700">
@@ -145,7 +147,7 @@ function ActiveOrderCard({ order }: any) {
 
       <div className="p-4 bg-gray-900 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <p className="text-gray-400 text-xs">Yetkazib berish narxi:</p>
+          <p className="text-gray-400 text-xs">{t('orders_delivery_price')}</p>
           <p className="text-white text-xs">+20 000 so'm</p>
         </div>
       </div>

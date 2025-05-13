@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import Counter from "./ui/counter";
 import { useCartStore } from "@/lib/store/cart";
+import { useTranslation } from 'react-i18next';
 
 const MotionButton = motion(Button);
 
@@ -78,6 +79,7 @@ const AddButton = ({
   const currentItem = items.find((item) => item.id === id);
   const count = currentItem?.quantity || 0;
   const isActive = count > 0;
+  const { t } = useTranslation();
 
   const handleIncrement = () => {
     if (!id || !name || !price || !image) return;
@@ -118,7 +120,7 @@ const AddButton = ({
         style={{ pointerEvents: isActive ? "none" : "auto" }}
       >
         <span className="text-center text-white flex items-center justify-center text-sm font-semibold h-full">
-          Qo'shish
+          {t('add_to_cart')}
         </span>
       </motion.button>
 

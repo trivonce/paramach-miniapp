@@ -1,29 +1,30 @@
 import { useTheme } from "@/components/theme-provider";
-
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-const themes = [
-  {
-    id: "light",
-    name: "Kunduzgi",
-  },
-  {
-    id: "dark",
-    name: "Tungi",
-  },
-  {
-    id: "system",
-    name: "Tizim",
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const { t } = useTranslation();
+
+  const themes = [
+    {
+      id: "light",
+      name: t('theme_light'),
+    },
+    {
+      id: "dark",
+      name: t('theme_dark'),
+    },
+    {
+      id: "system",
+      name: t('theme_system'),
+    },
+  ];
 
   return (
     <div className="space-y-1">
-      <Label className="text-sm font-normal">Mavzuni tanlang</Label>
+      <Label className="text-sm font-normal">{t('select_theme')}</Label>
       <RadioGroup
         className="grid grid-cols-3 items-center gap-0 relative overflow-hidden dark:bg-gray-900 bg-gray-100 rounded-xl z-[1]"
         onValueChange={setTheme}

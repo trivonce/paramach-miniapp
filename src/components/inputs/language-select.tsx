@@ -25,13 +25,13 @@ export const LanguageSelect = React.forwardRef<
   HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof Select>
 >(({ ...props }, ref) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <div className="space-y-1">
-      <Label className="text-sm">Tilni tanlang</Label>
+      <Label className="text-sm">{t('select_language')}</Label>
       <Select defaultValue={i18n.language} onValueChange={i18n.changeLanguage} {...props}>
         <SelectTrigger ref={ref}>
-          <SelectValue placeholder="Tilni tanlang" />
+          <SelectValue placeholder={t('select_language')} />
         </SelectTrigger>
         <SelectContent id="language-select">
           <SelectGroup>

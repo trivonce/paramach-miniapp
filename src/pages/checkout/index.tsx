@@ -17,6 +17,7 @@ import { formatPrice } from "@/lib/utils";
 import { useCreateOrder } from "@/lib/hooks/use-orders";
 import { useUserStore } from "@/lib/store/user-store";
 import { useLocationStore } from "@/lib/store/location-store";
+import { useTranslation } from 'react-i18next';
 
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -38,6 +39,7 @@ import Map from "../home/_components/map";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [showSuccess, setShowSuccess] = useState(false);
   const items = useCartStore((state) => state.items);
@@ -103,7 +105,7 @@ export default function CheckoutPage() {
           <ArrowLeft className="h-6 w-6" />
         </Button>
         <h1 className="text-lg font-bold text-white ml-1">
-          Buyurtmani tasdiqlash
+          {t('checkout_title')}
         </h1>
       </header>
 
@@ -112,23 +114,24 @@ export default function CheckoutPage() {
         {/* Restaurant Info */}
         <div className="bg-gray-800 rounded-lg p-4 mb-4">
           <h2 className="text-white font-medium text-base mb-1">
-            Paramach.uz (Sergili filiali)
+            Paramach.uz ({t('checkout_branch_name')})
           </h2>
           <h2 className="text-gray-300 text-xs font-medium mt-3">
-            Manzil:{" "}
+            {t('checkout_restaurant_address_label')}
             <span className="font-normal text-gray-400">
-              Sirg‘ali tumani, Sofdil MFY, Shokir ariq ko'chasi, 1-uy
+              {t('checkout_restaurant_address')}
             </span>
           </h2>
-          <p className="text-gray-300 font-medium text-xs mt-3">
-            Taxminiy yetkazish vaqti: <span className="font-normal text-gray-400">30-40 daqiqa</span>
-          </p>
+          {/* <p className="text-gray-300 font-medium text-xs mt-3">
+            {t('checkout_estimated_time_label')}
+            <span className="font-normal text-gray-400">{t('checkout_estimated_time_value')}</span>
+          </p> */}
         </div>
 
         {/* Order Items */}
         <div className="bg-gray-800 rounded-lg overflow-hidden mb-4">
           <div className="p-4 border-gray-700">
-            <h2 className="text-white font-medium mb-3">Buyurtma tarkibi</h2>
+            <h2 className="text-white font-medium mb-3">{t('checkout_order_items')}</h2>
             <div className="space-y-3">
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between">
@@ -148,9 +151,7 @@ export default function CheckoutPage() {
         {/* Delivery Address */}
         <div className="bg-gray-800 rounded-lg overflow-hidden mb-4">
           <div className="p-4 border-b border-gray-700">
-            <h2 className="text-white font-medium mb-3">
-              Yetkazib berish manzili
-            </h2>
+            <h2 className="text-white font-medium mb-3">{t('checkout_delivery_address')}</h2>
             <div className="flex items-start gap-3">
               <MapPin className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
               <div>
@@ -164,7 +165,7 @@ export default function CheckoutPage() {
             className="p-3 w-full bg-gray-900 flex justify-between items-center cursor-pointer"
             onClick={() => setMapOpen(true)}
           >
-            <span className="text-white flex items-center gap-2 text-sm"> <MapIcon className="w-4 h-4" /> Manzilni o'zgartirish</span>
+            <span className="text-white flex items-center gap-2 text-sm"> <MapIcon className="w-4 h-4" /> {t('checkout_change_address')}</span>
             <ChevronRight className="h-5 w-5 text-gray-400" />
           </button>
         </div>
@@ -175,8 +176,8 @@ export default function CheckoutPage() {
             <div className="flex items-start gap-3">
               <Clock className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-gray-400 text-sm">Yetkazib berish vaqti</p>
-                <p className="text-white text-xs">30-40 daqiqa</p>
+                <p className="text-gray-400 text-sm">{t('checkout_delivery_time')}</p>
+                <p className="text-white text-xs">{t('checkout_estimated_time_value')}</p>
               </div>
             </div>
           </div>
@@ -185,7 +186,7 @@ export default function CheckoutPage() {
         {/* Payment Method */}
         <div className="bg-gray-800 rounded-lg overflow-hidden mb-4">
           <div className="p-4">
-            <h2 className="text-white font-medium mb-3">To'lov usuli</h2>
+            <h2 className="text-white font-medium mb-3">{t('checkout_payment_method')}</h2>
             <RadioGroup
               value={paymentMethod}
               onValueChange={setPaymentMethod}
@@ -202,7 +203,7 @@ export default function CheckoutPage() {
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <Banknote className="h-5 w-5 text-gray-400" />
-                  <span className="text-white text-sm">Naqd pul</span>
+                  <span className="text-white text-sm">{t('checkout_cash')}</span>
                 </Label>
               </div>
             </RadioGroup>
@@ -212,21 +213,21 @@ export default function CheckoutPage() {
         {/* Order Summary */}
         <div className="bg-gray-800 rounded-lg overflow-hidden mb-6">
           <div className="p-4">
-            <h2 className="text-white font-medium mb-3">To'lov ma'lumotlari</h2>
+            <h2 className="text-white font-medium mb-3">{t('checkout_payment_info')}</h2>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-400 text-xs">Mahsulotlar narxi</span>
+                <span className="text-gray-400 text-xs">{t('checkout_products_price')}</span>
                 <span className="text-white text-xs">{formatPrice(total)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400 text-xs">Yetkazib berish</span>
+                <span className="text-gray-400 text-xs">{t('checkout_delivery')}</span>
                 <span className="text-white text-xs">
                   {formatPrice(deliveryFee)}
                 </span>
               </div>
               <Separator className="my-2 bg-gray-700" />
               <div className="flex justify-between">
-                <span className="text-white font-medium text-sm">Jami</span>
+                <span className="text-white font-medium text-sm">{t('checkout_total')}</span>
                 <span className="text-green-500 font-medium text-sm">
                   {formatPrice(total + deliveryFee)}
                 </span>
@@ -242,8 +243,8 @@ export default function CheckoutPage() {
           disabled={createOrder.isPending}
         >
           {createOrder.isPending
-            ? "Buyurtma tasdiqlanmoqda..."
-            : "Buyurtmani tasdiqlash"}
+            ? t('checkout_confirming')
+            : t('checkout_confirm')}
         </Button>
       </main>
 
@@ -252,7 +253,7 @@ export default function CheckoutPage() {
         <DialogContent className="bg-gray-800 border-gray-700 text-white w-[90%] rounded-3xl">
           <DialogHeader>
             <DialogTitle className="text-center text-xl font-bold text-white">
-              Buyurtma qabul qilindi!
+              {t('checkout_success_title')}
             </DialogTitle>
           </DialogHeader>
           <div className="flex flex-col items-center justify-center mt-6">
@@ -260,14 +261,13 @@ export default function CheckoutPage() {
               <CheckCircle2 className="h-16 w-16 text-green-500" />
             </div>
             <p className="text-center text-gray-300 mb-6">
-              Sizning buyurtmangiz muvaffaqiyatli qabul qilindi. Buyurtma holati
-              haqida ma'lumotni "Buyurtmalar" bo'limida ko'rishingiz mumkin.
+              {t('checkout_success_desc')}
             </p>
             <Button
               className="w-full bg-green-500 hover:bg-green-600 text-white"
               onClick={handleSuccessClose}
             >
-              Buyurtmalarni ko'rish
+              {t('checkout_success_btn')}
             </Button>
           </div>
         </DialogContent>
@@ -278,7 +278,7 @@ export default function CheckoutPage() {
         <DrawerContent className="">
           <DrawerHeader>
             <DrawerTitle className="text-center text-xl font-bold text-white">
-              Manzilni tanlang
+              {t('checkout_select_address')}
             </DrawerTitle>
           </DrawerHeader>
           {/* Map component for selecting location */}
