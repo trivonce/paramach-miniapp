@@ -8,19 +8,21 @@ import {
     DrawerTitle,
     DrawerTrigger,
   } from "@/components/ui/drawer"
+import { useTranslation } from 'react-i18next';
 
 const AboutUsDrawer = ({children}: {children: React.ReactNode}) => {
+    const { t } = useTranslation();
     return <Drawer>
     <DrawerTrigger asChild>
         {children}
     </DrawerTrigger>
     <DrawerContent>
       <DrawerHeader>
-        <DrawerTitle>Biz haqimizda</DrawerTitle>
+        <DrawerTitle>{t('profile_about_us')}</DrawerTitle>
       </DrawerHeader>
       <DrawerFooter>
         <DrawerClose asChild>
-          <Button variant="outline">Tushunarli</Button>
+          <Button variant="outline">{t('profile_understood')}</Button>
         </DrawerClose>
       </DrawerFooter>
     </DrawerContent>

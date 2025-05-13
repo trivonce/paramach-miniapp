@@ -32,7 +32,6 @@ const HomePage = () => {
     >
       <Location isOpen={locationDrawerOpen} onOpenChange={setLocationDrawerOpen} />
       {/* <AdBanner /> */}
-      <div className="mb-2 font-bold text-lg">{t('hello')}</div>
       {/* <PopularProducts /> */}
       <Products />
     </motion.main>

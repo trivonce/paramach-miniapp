@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // import { toast } from "sonner";
 import { MapPinPlusInside } from "lucide-react";
 import { useLocationStore } from "@/lib/store/location-store";
+import { useTranslation } from 'react-i18next';
 
 interface YandexMapProps {
   onSelectLocation?: (location: { latitude: number; longitude: number; address: string }) => void;
@@ -16,7 +17,8 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
   // const getCurrentLocation = useLocationStore((state) => state.getCurrentLocation);
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
   const [coords, setCoords] = useState<[number, number] | null>(null);
-  const [locationName, setLocationName] = useState<string>("Fetching location...");
+  const { t } = useTranslation();
+  const [locationName, setLocationName] = useState<string>(t('fetching_location'));
 
   // Set initial map center from store location
   useEffect(() => {
@@ -27,9 +29,9 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
     } else {
       setMapCenter([41.2995, 69.2401]);
       setCoords([41.2995, 69.2401]);
-      setLocationName("Fetching location...");
+      setLocationName(t('fetching_location'));
     }
-  }, [location]);
+  }, [location, t]);
 
   const fetchLocationName = async ([lat, lon]: [number, number]) => {
     try {
@@ -38,10 +40,10 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
       );
       const data = await response.json();
       const geoObject = data.response.GeoObjectCollection.featureMember[0]?.GeoObject;
-      const name = geoObject?.metaDataProperty?.GeocoderMetaData?.text || "Unknown location";
+      const name = geoObject?.metaDataProperty?.GeocoderMetaData?.text || t('unknown_location');
       setLocationName(name);
     } catch (error) {
-      setLocationName("Location not found");
+      setLocationName(t('location_not_found'));
     }
   };
 
@@ -95,7 +97,7 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
         <h1 className="text-center mb-3 text-sm leading-5">{locationName}</h1>
         <Button
           className="w-full h-12"
-          disabled={locationName === "Fetching location..." || locationName === "Location not found"}
+          disabled={locationName === t('fetching_location') || locationName === t('location_not_found')}
           onClick={() => {
             if (coords && locationName && onSelectLocation) {
               onSelectLocation({
@@ -107,7 +109,7 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
           }}
         >
           <MapPinPlusInside size={20} className="shrink-0" />
-          Qo'shish
+          {t('add_location')}
         </Button>
       </div>
     </motion.div>

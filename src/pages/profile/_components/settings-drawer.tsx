@@ -8,14 +8,17 @@ import {
 
 import { LanguageSelect } from "@/components/inputs";
 import { ModeToggle } from "@/components/mode-toggle";
+import { useTranslation } from 'react-i18next';
 
 const SettingsDrawer = ({ children }: { children: React.ReactNode }) => {
+  const { t } = useTranslation();
+
   return (
     <Drawer>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Sozlamalar</DrawerTitle>
+          <DrawerTitle>{t('profile_settings')}</DrawerTitle>
         </DrawerHeader>
 
         <div className="space-y-4 px-5 pb-10">

@@ -12,6 +12,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useTranslation } from 'react-i18next';
 
 import {
   Form,
@@ -24,8 +25,8 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  full_name: z.string().min(2, { message: "Ism Familiyani kiriting" }).max(50),
-    phone_number: z.string().min(9, { message: "Telefon raqamini kiriting" }).max(13),
+  full_name: z.string().min(2, { message: 'profile_enter_fullname' }).max(50),
+  phone_number: z.string().min(9, { message: 'profile_enter_phone' }).max(13),
 });
 
 const PersonalInformationDrawer = ({
@@ -33,6 +34,7 @@ const PersonalInformationDrawer = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { t } = useTranslation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +54,7 @@ const PersonalInformationDrawer = ({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DrawerHeader>
-              <DrawerTitle>Shaxsiy ma'lumotlar</DrawerTitle>
+              <DrawerTitle>{t('profile_personal_info')}</DrawerTitle>
             </DrawerHeader>
 
             <div className="space-y-4 px-5">
@@ -61,23 +63,23 @@ const PersonalInformationDrawer = ({
                 name="full_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ism Familiya</FormLabel>
+                    <FormLabel>{t('profile_fullname')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Ulugbek Temirov" {...field} />
+                      <Input placeholder={t('profile_fullname_placeholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-            <FormField
+              <FormField
                 control={form.control}
                 name="phone_number"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Telefon raqamingiz</FormLabel>
+                    <FormLabel>{t('profile_phone')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="+998 93 656 36 72" {...field} />
+                      <Input placeholder={t('profile_phone_placeholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -88,10 +90,10 @@ const PersonalInformationDrawer = ({
             <DrawerFooter className="flex flex-row items-center justify-center">
               <DrawerClose asChild>
                 <Button className="w-full" variant="outline">
-                  Bekor qilish
+                  {t('profile_cancel')}
                 </Button>
               </DrawerClose>
-              <Button className="w-full">Saqlash</Button>
+              <Button className="w-full">{t('profile_save')}</Button>
             </DrawerFooter>
           </form>
         </Form>

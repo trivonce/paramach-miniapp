@@ -1,5 +1,6 @@
 import ProductCard from "@/components/product-card";
 import { useProducts } from "@/lib/hooks/use-products";
+import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: number;
@@ -19,6 +20,7 @@ interface Product {
 
 const Products = () => {
   const { data: products, isLoading, error } = useProducts();
+  const { t, i18n } = useTranslation();
 
   if (isLoading) {
     return (
@@ -42,7 +44,7 @@ const Products = () => {
   if (error) {
     return (
       <div className="mt-5 text-center">
-        <p className="text-red-500">Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.</p>
+        <p className="text-red-500">{t('products_error')}</p>
       </div>
     );
   }
@@ -68,14 +70,14 @@ const Products = () => {
         {groupedProducts && Object.values(groupedProducts).map((category) => (
           <div key={category.id}>
             <h1 className="font-semibold text-2xl font-baloo text-tp-main mb-2">
-              {category.name_uz}
+              {i18n.language === 'ru' ? category.name_ru : category.name_uz}
             </h1>
             <div className="grid grid-cols-2 gap-3">
               {category.products.map((product) => (
                 <ProductCard
                   key={product.id}
                   id={product.id}
-                  name={product.name_uz}
+                  name={i18n.language === 'ru' ? product.name_ru : product.name_uz}
                   price={parseFloat(product.price)}
                   image={product.image}
                 />

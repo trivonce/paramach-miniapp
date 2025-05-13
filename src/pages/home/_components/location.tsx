@@ -13,6 +13,7 @@ import {
 import { MapPinIcon } from "lucide-react";
 import Map from "./map";
 import { useLocationStore } from "@/lib/store/location-store";
+import { useTranslation } from 'react-i18next';
 
 interface LocationProps {
   isOpen?: boolean;
@@ -25,6 +26,7 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
   const setIsOpen = onOpenChange || setUncontrolledOpen;
   const location = useLocationStore((state) => state.location);
   const setLocation = useLocationStore((state) => state.setLocation);
+  const { t } = useTranslation();
 
   return (
     <Drawer disablePreventScroll open={isOpen} onOpenChange={setIsOpen} modal={true}>
@@ -32,19 +34,19 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
         <button className="bg-brand text-white rounded-2xl px-3 active:scale-90 duration-200 py-3 w-full" onClick={() => setIsOpen(true)}>
           <div className="flex items-center gap-1 justify-center mb-1">
             <MapPinIcon size={14} className="shrink-0" />
-            <h1 className="text-center text-sm">Joriy manzil</h1>
+            <h1 className="text-center text-sm">{t('current_address')}</h1>
           </div>
           <h1 className="font-medium text-center leading-5">
-            {location?.address || "Manzil tanlanmagan"}
+            {location?.address || t('address_not_selected')}
           </h1>
         </button>
       </DrawerTrigger>
 
       <DrawerContent className={``}>
         <DrawerHeader>
-          <DrawerTitle>Manzilni tanlang</DrawerTitle>
+          <DrawerTitle>{t('select_address')}</DrawerTitle>
           <DrawerDescription>
-            Hozirgi joylashuvingizni tanlang
+            {t('select_current_location')}
           </DrawerDescription>
         </DrawerHeader>
 

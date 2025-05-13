@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import SettingsDrawer from "./_components/settings-drawer";
 import AboutUsDrawer from "./_components/about-us-drawer";
 import { useUserStore } from "@/lib/store/user-store";
+import { useTranslation } from 'react-i18next';
 
 const settings = [
   // {
@@ -24,31 +25,33 @@ const settings = [
   // },
   {
     id: "2",
-    title: "Xabar va yangiliklar",
+    title: "profile_news",
     action: () => window.open("https://t.me/paramach_uz", "_blank"),
     icon: NewspaperIcon,
   },
   {
     id: "3",
-    title: "Biz haqimizda",
+    title: "profile_about_us",
     wrapper: AboutUsDrawer,
     icon: InfoIcon,
   },
   {
     id: "4",
-    title: "Sozlamalar",
+    title: "profile_settings",
     wrapper: SettingsDrawer,
     icon: SettingsIcon,
   },
   {
     id: "5",
-    title: "Chiqish",
+    title: "profile_logout",
     icon: LogOutIcon,
   },
 ];
 
 const ProfilePage = () => {
   const user = useUserStore((state) => state.user);
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{
@@ -96,10 +99,10 @@ const ProfilePage = () => {
 
           <div>
             <h1 className="text-xl font-semibold">
-              {user?.first_name || "Dev"} {user?.last_name || "User"}
+              {user?.first_name || t('profile_dev_name')} {user?.last_name || t('profile_dev_lastname')}
             </h1>
             <p className="dark:text-gray-400 text-tp-main">
-              {user?.id ? `@${user.id}` : "@default_id"}
+              {user?.id ? `@${user.id}` : t('profile_default_id')}
             </p>
           </div>
         </div>
@@ -115,7 +118,7 @@ const ProfilePage = () => {
                 >
                   <span className="flex items-center gap-3">
                     <Icon size={24} />
-                    <h1 className="">{title}</h1>
+                    <h1 className="">{t(title)}</h1>
                   </span>
 
                   <ChevronRight
@@ -129,7 +132,7 @@ const ProfilePage = () => {
         </div>
 
         <div className="dark:bg-gray-900 bg-white rounded-xl mt-3 p-3">
-          Aloqa markazi: <a href="tel:+998936563672">+998 77 378 06 06</a>
+          {t('profile_contact')}: <a href="tel:+998936563672">+998 77 378 06 06</a>
         </div>
       </div>
     </motion.div>

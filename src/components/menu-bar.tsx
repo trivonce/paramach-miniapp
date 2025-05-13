@@ -1,30 +1,31 @@
 import { HomeIcon, ShoppingBasketIcon, TableOfContentsIcon, UserIcon } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useCartStore } from "@/lib/store/cart";
+import { useTranslation } from 'react-i18next';
 
 const menu = [
   {
     id: "home",
     to: "/",
-    name: "Asosiy",
+    name: "menu_home",
     icon: HomeIcon,
   },
   {
     id: "cart",
     to: "/cart",
-    name: "Savatcha",
+    name: "menu_cart",
     icon: ShoppingBasketIcon,
   },
   {
     id: "orders",
     to: "/orders",
-    name: "Buyurtmalar",
+    name: "menu_orders",
     icon: TableOfContentsIcon,
   },
   {
     id: "profile",
     to: "/profile",
-    name: "Profil",
+    name: "menu_profile",
     icon: UserIcon,
   },
 ];
@@ -32,6 +33,7 @@ const menu = [
 const MenuBar = () => {
   const { pathname } = useLocation();
   const items = useCartStore((state: { items: any[] }) => state.items);
+  const { t } = useTranslation();
 
   if ((pathname === "/cart" && items.length !== 0) || pathname === "/checkout") return null;
 
@@ -55,7 +57,7 @@ const MenuBar = () => {
                 </span>
               )}
               <Icon className="shrink-0" size={30} />
-              <span className="text-xs">{name}</span>
+              <span className="text-xs">{t(name)}</span>
             </NavLink>
           </span>
         ))}
