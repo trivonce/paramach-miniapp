@@ -121,6 +121,7 @@ const YandexMap = ({ onSelectLocation }: YandexMapProps) => {
         <h1 className="text-center mb-3 text-sm leading-5">{locationName}</h1>
         <Button
           className="w-full h-12"
+          disabled={locationName === "Fetching location..." || locationName === "Location not found"}
           onClick={() => {
             if (coords && locationName && onSelectLocation) {
               onSelectLocation({

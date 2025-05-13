@@ -16,12 +16,12 @@ import AboutUsDrawer from "./_components/about-us-drawer";
 import { useUserStore } from "@/lib/store/user-store";
 
 const settings = [
-  {
-    id: "1",
-    title: "Shaxsiy ma'lumotlarim",
-    wrapper: PersonalInformationDrawer,
-    icon: CircleUserRound,
-  },
+  // {
+  //   id: "1",
+  //   title: "Shaxsiy ma'lumotlarim",
+  //   wrapper: PersonalInformationDrawer,
+  //   icon: CircleUserRound,
+  // },
   {
     id: "2",
     title: "Xabar va yangiliklar",

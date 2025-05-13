@@ -23,7 +23,8 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const isOpen = controlledOpen !== undefined ? controlledOpen : uncontrolledOpen;
   const setIsOpen = onOpenChange || setUncontrolledOpen;
-  const { setLocation } = useLocationStore();
+  const location = useLocationStore((state) => state.location);
+  const setLocation = useLocationStore((state) => state.setLocation);
 
   return (
     <Drawer disablePreventScroll open={isOpen} onOpenChange={setIsOpen} modal={true}>
@@ -34,7 +35,7 @@ const Location = ({ isOpen: controlledOpen, onOpenChange }: LocationProps) => {
             <h1 className="text-center text-sm">Joriy manzil</h1>
           </div>
           <h1 className="font-medium text-center leading-5">
-            Toshkent sh. Yunusobod tumani, Sh. Rusaveli ko'chasi 12
+            {location?.address || "Manzil tanlanmagan"}
           </h1>
         </button>
       </DrawerTrigger>
