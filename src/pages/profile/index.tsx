@@ -129,7 +129,7 @@ const ProfilePage = () => {
         </div>
 
         <div className="dark:bg-gray-900 bg-white rounded-xl mt-3 p-3">
-          Aloqa markazi: <a href="tel:+998936563672">+998 93 656 36 72</a>
+          Aloqa markazi: <a href="tel:+998936563672">+998 77 378 06 06</a>
         </div>
       </div>
     </motion.div>

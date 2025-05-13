@@ -8,12 +8,15 @@ import { useCartStore } from "@/lib/store/cart"
 import { formatPrice } from "@/lib/utils"
 import { useCreateOrder } from "@/lib/hooks/use-orders"
 import { useUserStore } from "@/lib/store/user-store"
+import { useLocationStore } from "@/lib/store/location-store"
 
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer"
+import Map from "../home/_components/map"
 
 export default function CheckoutPage() {
   const navigate = useNavigate()
@@ -25,16 +28,20 @@ export default function CheckoutPage() {
 
   const createOrder = useCreateOrder()
   const userId = useUserStore((state) => state.user?.id);
+  const locationStore = useLocationStore();
+  const location = locationStore.location;
+  // For map dialog
+  const [mapOpen, setMapOpen] = useState(false);
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const deliveryFee = 20000
 
   const handleConfirmOrder = async () => {
     const orderData = {
-      address: "123 Main Street, Tashkent",
+      address: location?.address || "Toshkent, O'zbekiston",
       phone_number: "+998901234567",
-      latitude: 41.299496,
-      longitude: 69.240073,
+      latitude: location?.latitude || 41.299496,
+      longitude: location?.longitude || 69.240073,
       items: items.map(item => ({
         product_id: item.id,
         quantity: item.quantity
@@ -105,18 +112,18 @@ export default function CheckoutPage() {
             <div className="flex items-start gap-3">
               <MapPin className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-white text-sm">Toshkent sh. Yunusobod tumani, Sh. Rustaveli ko'chasi 12</p>
-                <p className="text-gray-400 text-xs mt-1">Uy, kvartira: 42</p>
+                <p className="text-white text-sm">{location?.address || "Toshkent, O'zbekiston"}</p>
+                {/* Optionally render more address details here */}
               </div>
             </div>
           </div>
-
-          <Link to="/address">
-            <div className="p-4 bg-gray-900 flex justify-between items-center">
-              <span className="text-white">Manzilni o'zgartirish</span>
-              <ChevronRight className="h-5 w-5 text-gray-400" />
-            </div>
-          </Link>
+          <button
+            className="p-4 w-full bg-gray-900 flex justify-between items-center cursor-pointer"
+            onClick={() => setMapOpen(true)}
+          >
+            <span className="text-white">Manzilni o'zgartirish</span>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </button>
         </div>
 
         {/* Delivery Time */}
@@ -200,6 +207,22 @@ export default function CheckoutPage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Map Drawer for changing location */}
+      <Drawer open={mapOpen} onOpenChange={setMapOpen}>
+        <DrawerContent className="">
+          <DrawerHeader>
+            <DrawerTitle className="text-center text-xl font-bold text-white">Manzilni tanlang</DrawerTitle>
+          </DrawerHeader>
+          {/* Map component for selecting location */}
+          <div className="mt-4">
+            <Map onSelectLocation={(loc: { latitude: number; longitude: number; address: string }) => {
+              locationStore.setLocation(loc);
+              setMapOpen(false);
+            }} />
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   )
 }
