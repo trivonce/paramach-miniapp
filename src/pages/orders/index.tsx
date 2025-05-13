@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { useOrders } from "@/lib/hooks/use-orders"
 import type { Order } from "@/lib/hooks/use-orders"
 import { formatDate, formatPrice } from '@/lib/utils'
+import { motion } from 'framer-motion';
 
 export default function OrdersPage() {
   const [_activeTab, setActiveTab] = useState("active")
@@ -24,7 +25,12 @@ export default function OrdersPage() {
   const orderHistory = orders.filter((order: Order) => ["completed", "cancelled"].includes(order.status));
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#121212] pb-20">
+    <motion.div initial={{ opacity: 0, y: 50}}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.2 }}
+      className="flex flex-col min-h-screen bg-[#121212] pb-20"
+    >
       {/* Header */}
       <header className="p-4 bg-[#121212] border-b border-gray-800">
         <h1 className="text-lg font-bold text-white">{t('orders_title')}</h1>
@@ -103,7 +109,7 @@ export default function OrdersPage() {
           </TabsContent>
         </Tabs>
       </main>
-    </div>
+    </motion.div>
   )
 }
 

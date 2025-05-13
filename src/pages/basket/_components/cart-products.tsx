@@ -42,7 +42,7 @@ const CartProducts = () => {
         className="fixed bottom-2 left-2 right-2 p-4 bg-white dark:bg-gray-900 rounded-3xl"
       >
         <div className="container flex flex-col gap-3 items-center justify-between">
-          <p className="text-xl font-semibold">{formatPrice(totalPrice)}</p>
+          <p className="text-xl font-semibold">{formatPrice(totalPrice)} {t('currency')}</p>
           <div className="flex gap-2">
             <Button className="bg-teal-500" onClick={() => navigate('/')}>
               <SquareMenu />

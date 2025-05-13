@@ -15,42 +15,45 @@ import SettingsDrawer from "./_components/settings-drawer";
 import AboutUsDrawer from "./_components/about-us-drawer";
 import { useUserStore } from "@/lib/store/user-store";
 import { useTranslation } from 'react-i18next';
-
-const settings = [
-  // {
-  //   id: "1",
-  //   title: "Shaxsiy ma'lumotlarim",
-  //   wrapper: PersonalInformationDrawer,
-  //   icon: CircleUserRound,
-  // },
-  {
-    id: "2",
-    title: "profile_news",
-    action: () => window.open("https://t.me/paramach_uz", "_blank"),
-    icon: NewspaperIcon,
-  },
-  {
-    id: "3",
-    title: "profile_about_us",
-    wrapper: AboutUsDrawer,
-    icon: InfoIcon,
-  },
-  {
-    id: "4",
-    title: "profile_settings",
-    wrapper: SettingsDrawer,
-    icon: SettingsIcon,
-  },
-  {
-    id: "5",
-    title: "profile_logout",
-    icon: LogOutIcon,
-  },
-];
+import { useTelegram } from '@/lib/hooks/use-telegram';
 
 const ProfilePage = () => {
   const user = useUserStore((state) => state.user);
   const { t } = useTranslation();
+  const { closeApp } = useTelegram();
+
+  const settings = [
+    // {
+    //   id: "1",
+    //   title: "Shaxsiy ma'lumotlarim",
+    //   wrapper: PersonalInformationDrawer,
+    //   icon: CircleUserRound,
+    // },
+    {
+      id: "2",
+      title: "profile_news",
+      action: () => window.open("https://t.me/paramach_uz", "_blank"),
+      icon: NewspaperIcon,
+    },
+    {
+      id: "3",
+      title: "profile_about_us",
+      wrapper: AboutUsDrawer,
+      icon: InfoIcon,
+    },
+    {
+      id: "4",
+      title: "profile_settings",
+      wrapper: SettingsDrawer,
+      icon: SettingsIcon,
+    },
+    {
+      id: "5",
+      title: "profile_logout",
+      icon: LogOutIcon,
+      action: closeApp,
+    },
+  ];
 
   return (
     <motion.div
