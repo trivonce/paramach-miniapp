@@ -93,18 +93,18 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#121212]">
+    <div className="flex flex-col min-h-screen dark:bg-[#121212] bg-gray-100">
       {/* Header */}
-      <header className="p-4 bg-[#121212] border-b border-gray-800 flex items-center">
+      <header className="p-4 dark:bg-[#121212] bg-white border-b dark:border-gray-800 border-gray-200 flex items-center">
         <Button
           onClick={() => navigate(-1)}
           variant="ghost"
           size="icon"
-          className="text-white mr-2 bg-gray-800 size-8"
+          className="dark:text-white text-gray-900 mr-2 dark:bg-gray-800 bg-gray-200 size-8"
         >
           <ArrowLeft className="h-6 w-6" />
         </Button>
-        <h1 className="text-lg font-bold text-white ml-1">
+        <h1 className="text-lg font-bold dark:text-white text-gray-900 ml-1">
           {t('checkout_title')}
         </h1>
       </header>
@@ -112,13 +112,13 @@ export default function CheckoutPage() {
       {/* Main Content */}
       <main className="flex-1 p-4">
         {/* Restaurant Info */}
-        <div className="bg-gray-800 rounded-lg p-4 mb-4">
-          <h2 className="text-white font-medium text-base mb-1">
+        <div className="dark:bg-gray-800 bg-white rounded-lg p-4 mb-4">
+          <h2 className="dark:text-white text-gray-900 font-medium text-base mb-1">
             Paramach.uz ({t('checkout_branch_name')})
           </h2>
-          <h2 className="text-gray-300 text-xs font-medium mt-3">
+          <h2 className="dark:text-gray-300 text-gray-500 text-xs font-medium mt-3">
             {t('checkout_restaurant_address_label')}
-            <span className="font-normal text-gray-400">
+            <span className="font-normal dark:text-gray-400 text-gray-600">
               {t('checkout_restaurant_address')}
             </span>
           </h2>
@@ -129,17 +129,17 @@ export default function CheckoutPage() {
         </div>
 
         {/* Order Items */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden mb-4">
-          <div className="p-4 border-gray-700">
-            <h2 className="text-white font-medium mb-3">{t('checkout_order_items')}</h2>
+        <div className="dark:bg-gray-800 bg-white rounded-lg overflow-hidden mb-4">
+          <div className="p-4 dark:border-gray-700 border-gray-200">
+            <h2 className="dark:text-white text-gray-900 font-medium mb-3">{t('checkout_order_items')}</h2>
             <div className="space-y-3">
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-white text-xs">{item.quantity}x</span>
-                    <span className="text-white text-xs">{item.name}</span>
+                    <span className="dark:text-white text-gray-900 text-xs">{item.quantity}x</span>
+                    <span className="dark:text-white text-gray-900 text-xs">{item.name}</span>
                   </div>
-                  <span className="text-gray-400 text-xs">
+                  <span className="dark:text-gray-400 text-gray-600 text-xs">
                     {formatPrice(item.price * item.quantity)}
                   </span>
                 </div>
@@ -149,50 +149,50 @@ export default function CheckoutPage() {
         </div>
 
         {/* Delivery Address */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden mb-4">
-          <div className="p-4 border-b border-gray-700">
-            <h2 className="text-white font-medium mb-3">{t('checkout_delivery_address')}</h2>
+        <div className="dark:bg-gray-800 bg-white rounded-lg overflow-hidden mb-4">
+          <div className="p-4 border-b dark:border-gray-700 border-gray-200">
+            <h2 className="dark:text-white text-gray-900 font-medium mb-3">{t('checkout_delivery_address')}</h2>
             <div className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <MapPin className="h-5 w-5 dark:text-gray-400 text-gray-600 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-white text-sm">
+                <p className="dark:text-white text-gray-900 text-sm">
                   {location?.address || "Toshkent, O'zbekiston"}
                 </p>
               </div>
             </div>
           </div>
           <button
-            className="p-3 w-full bg-gray-900 flex justify-between items-center cursor-pointer"
+            className="p-3 w-full dark:bg-gray-900 bg-gray-100 flex justify-between items-center cursor-pointer"
             onClick={() => setMapOpen(true)}
           >
-            <span className="text-white flex items-center gap-2 text-sm"> <MapIcon className="w-4 h-4" /> {t('checkout_change_address')}</span>
-            <ChevronRight className="h-5 w-5 text-gray-400" />
+            <span className="dark:text-white text-gray-900 flex items-center gap-2 text-sm"> <MapIcon className="w-4 h-4" /> {t('checkout_change_address')}</span>
+            <ChevronRight className="h-5 w-5 dark:text-gray-400 text-gray-600" />
           </button>
         </div>
 
         {/* Delivery Time */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden mb-4">
+        <div className="dark:bg-gray-800 bg-white rounded-lg overflow-hidden mb-4">
           <div className="p-4">
             <div className="flex items-start gap-3">
-              <Clock className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <Clock className="h-5 w-5 dark:text-gray-400 text-gray-600 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-gray-400 text-sm">{t('checkout_delivery_time')}</p>
-                <p className="text-white text-xs">{t('checkout_estimated_time_value')}</p>
+                <p className="dark:text-gray-400 text-gray-600 text-sm">{t('checkout_delivery_time')}</p>
+                <p className="dark:text-white text-gray-900 text-xs">{t('checkout_estimated_time_value')}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Payment Method */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden mb-4">
+        <div className="dark:bg-gray-800 bg-white rounded-lg overflow-hidden mb-4">
           <div className="p-4">
-            <h2 className="text-white font-medium mb-3">{t('checkout_payment_method')}</h2>
+            <h2 className="dark:text-white text-gray-900 font-medium mb-3">{t('checkout_payment_method')}</h2>
             <RadioGroup
               value={paymentMethod}
               onValueChange={setPaymentMethod}
               className="space-y-3"
             >
-              <div className="flex items-center space-x-3 bg-gray-900 p-3 rounded-lg">
+              <div className="flex items-center space-x-3 dark:bg-gray-900 bg-gray-100 p-3 rounded-lg">
                 <RadioGroupItem
                   value="cash"
                   id="cash"
@@ -202,8 +202,8 @@ export default function CheckoutPage() {
                   htmlFor="cash"
                   className="flex items-center gap-2 cursor-pointer"
                 >
-                  <Banknote className="h-5 w-5 text-gray-400" />
-                  <span className="text-white text-sm">{t('checkout_cash')}</span>
+                  <Banknote className="h-5 w-5 dark:text-gray-400 text-gray-600" />
+                  <span className="dark:text-white text-gray-900 text-sm">{t('checkout_cash')}</span>
                 </Label>
               </div>
             </RadioGroup>
@@ -211,23 +211,23 @@ export default function CheckoutPage() {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden mb-6">
+        <div className="dark:bg-gray-800 bg-white rounded-lg overflow-hidden mb-6">
           <div className="p-4">
-            <h2 className="text-white font-medium mb-3">{t('checkout_payment_info')}</h2>
+            <h2 className="dark:text-white text-gray-900 font-medium mb-3">{t('checkout_payment_info')}</h2>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-400 text-xs">{t('checkout_products_price')}</span>
-                <span className="text-white text-xs">{formatPrice(total)}</span>
+                <span className="dark:text-gray-400 text-gray-600 text-xs">{t('checkout_products_price')}</span>
+                <span className="dark:text-white text-gray-900 text-xs">{formatPrice(total)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400 text-xs">{t('checkout_delivery')}</span>
-                <span className="text-white text-xs">
+                <span className="dark:text-gray-400 text-gray-600 text-xs">{t('checkout_delivery')}</span>
+                <span className="dark:text-white text-gray-900 text-xs">
                   {formatPrice(deliveryFee)}
                 </span>
               </div>
-              <Separator className="my-2 bg-gray-700" />
+              <Separator className="my-2 dark:bg-gray-700 bg-gray-200" />
               <div className="flex justify-between">
-                <span className="text-white font-medium text-sm">{t('checkout_total')}</span>
+                <span className="dark:text-white text-gray-900 font-medium text-sm">{t('checkout_total')}</span>
                 <span className="text-green-500 font-medium text-sm">
                   {formatPrice(total + deliveryFee)}
                 </span>

@@ -13,7 +13,7 @@ const BasketPage = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.2 }}
-      className="container"
+      className="container bg-gray-100 dark:bg-gray-900"
     >
       {isCartEmpty ? <EmptyCart /> : <CartProducts />}
     </motion.main>

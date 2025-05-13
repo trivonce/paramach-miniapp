@@ -29,26 +29,26 @@ export default function OrdersPage() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.2 }}
-      className="flex flex-col min-h-screen bg-[#121212] pb-20"
+      className="flex flex-col min-h-screen dark:bg-[#121212] bg-gray-100 pb-20"
     >
       {/* Header */}
-      <header className="p-4 bg-[#121212] border-b border-gray-800">
-        <h1 className="text-lg font-bold text-white">{t('orders_title')}</h1>
+      <header className="p-4 dark:bg-[#121212] bg-white border-b dark:border-gray-800 border-gray-200">
+        <h1 className="text-lg font-bold dark:text-white text-gray-900">{t('orders_title')}</h1>
       </header>
 
       {/* Main Content */}
       <main className="flex-1 p-4">
         <Tabs defaultValue="active" className="w-full" onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-2 bg-gray-800 rounded-lg">
+          <TabsList className="grid w-full grid-cols-2 dark:bg-gray-800 bg-gray-200 rounded-lg">
             <TabsTrigger
               value="active"
-              className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
+              className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white dark:data-[state=active]:bg-green-500 dark:data-[state=active]:text-white"
             >
               {t('orders_active')}
             </TabsTrigger>
             <TabsTrigger
               value="history"
-              className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
+              className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white dark:data-[state=active]:bg-green-500 dark:data-[state=active]:text-white"
             >
               {t('orders_history')}
             </TabsTrigger>
@@ -72,7 +72,7 @@ export default function OrdersPage() {
             ) : (
               <div className="flex flex-col items-center justify-center py-10 text-center">
                 <ShoppingBag className="w-16 h-16 text-gray-500 mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">{t('orders_no_active')}</h3>
+                <h3 className="text-lg font-medium dark:text-white text-gray-900 mb-2">{t('orders_no_active')}</h3>
                 <p className="text-gray-400 mb-6">{t('orders_no_active_desc')}</p>
                 <Link to="/">
                   <Button className="bg-green-500 hover:bg-green-600 text-white">{t('orders_order_btn')}</Button>
@@ -99,7 +99,7 @@ export default function OrdersPage() {
             ) : (
               <div className="flex flex-col items-center justify-center py-10 text-center">
                 <Clock className="w-16 h-16 text-gray-500 mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">{t('orders_no_history')}</h3>
+                <h3 className="text-lg font-medium dark:text-white text-gray-900 mb-2">{t('orders_no_history')}</h3>
                 <p className="text-gray-400 mb-6">{t('orders_no_history_desc')}</p>
                 <Link to="/">
                   <Button className="bg-green-500 hover:bg-green-600 text-white">{t('orders_order_btn')}</Button>
@@ -115,11 +115,11 @@ export default function OrdersPage() {
 
 function ActiveOrderCard({ order, t }: any) {
   return (
-    <div className="bg-gray-800 rounded-lg overflow-hidden">
-      <div className="p-4 border-b border-gray-700">
+    <div className=" dark:bg-gray-800 bg-white rounded-lg overflow-hidden">
+      <div className="p-4 border-b dark:border-gray-700 border-gray-200">
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-white font-medium text-sm">#{order.id}</span>
+            <span className=" dark:text-white text-gray-900 font-medium text-sm">#{order.id}</span>
             <Badge
               className={`
               ${order.status === "pending" ? "bg-yellow-500" : ""}
@@ -130,10 +130,10 @@ function ActiveOrderCard({ order, t }: any) {
               <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className="text-gray-400 text-xs">{order.date}</span>
+          <span className=" dark:text-gray-400 text-gray-500 text-xs">{formatDate(order.date)}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-white text-sm">{order.restaurant}</span>
+          <span className=" dark:text-white text-gray-900 text-sm">{order.restaurant}</span>
           <span className="text-green-500 font-medium text-sm">{formatPrice(order.total)} {t('currency')}</span>
         </div>
       </div>
@@ -152,10 +152,10 @@ function ActiveOrderCard({ order, t }: any) {
         </div>
       </div>
 
-      <div className="p-4 bg-gray-900 flex justify-between items-center">
+      <div className="p-4 dark:bg-gray-900 bg-gray-100 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <p className="text-gray-400 text-xs">{t('orders_delivery_price')}</p>
-          <p className="text-white text-xs">+20 000 {t('currency')}</p>
+          <p className=" dark:text-gray-400 text-gray-500 text-xs">{t('orders_delivery_price')}</p>
+          <p className=" dark:text-white text-gray-900 text-xs">+20 000 {t('currency')}</p>
         </div>
       </div>
     </div>
@@ -164,11 +164,11 @@ function ActiveOrderCard({ order, t }: any) {
 
 function OrderHistoryCard({ order, t }: any) {
   return (
-    <div className="bg-gray-800 rounded-lg overflow-hidden">
+    <div className=" dark:bg-gray-800 bg-white rounded-lg overflow-hidden">
       <div className="p-4">
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-white font-medium text-sm">#{order.id}</span>
+            <span className=" dark:text-white text-gray-900 font-medium text-sm">#{order.id}</span>
             <Badge
               className={`
               ${order.status === "completed" ? "!bg-green-500" : ""}
@@ -179,10 +179,10 @@ function OrderHistoryCard({ order, t }: any) {
               <span className="text-xs">{order.statusText}</span>
             </Badge>
           </div>
-          <span className="text-gray-400 text-xs">{formatDate(order.date)}</span>
+          <span className=" dark:text-gray-400 text-gray-500 text-xs">{formatDate(order.date)}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-white text-sm">{order.restaurant}</span>
+          <span className=" dark:text-white text-gray-900 text-sm">{order.restaurant}</span>
           <span className="text-green-500 font-medium text-sm">{formatPrice(order.total)} {t('currency')}</span>
         </div>
       </div>

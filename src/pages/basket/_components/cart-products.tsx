@@ -25,7 +25,7 @@ const CartProducts = () => {
   }
 
   return (
-    <div className="pb-20 pt-3 min-h-screen">
+    <div className="pb-20 pt-3 min-h-screen ">
       <h1 className="font-semibold text-2xl font-baloo text-tp-main mb-4">
         🛒 {t('basket_title')}
       </h1>
