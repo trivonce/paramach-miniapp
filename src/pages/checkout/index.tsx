@@ -250,9 +250,9 @@ export default function CheckoutPage() {
 
       {/* Success Dialog */}
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
-        <DialogContent className="bg-gray-800 border-gray-700 text-white w-[90%] rounded-3xl">
+        <DialogContent className="bg-white dark:bg-gray-800 border-gray-700 text-gray-900 w-[90%] rounded-3xl">
           <DialogHeader>
-            <DialogTitle className="text-center text-xl font-bold text-white">
+            <DialogTitle className="text-center text-xl font-bold text-gray-900 dark:text-white">
               {t('checkout_success_title')}
             </DialogTitle>
           </DialogHeader>
@@ -260,7 +260,7 @@ export default function CheckoutPage() {
             <div className="bg-green-500/20 p-4 rounded-full mb-4">
               <CheckCircle2 className="h-16 w-16 text-green-500" />
             </div>
-            <p className="text-center text-gray-300 mb-6">
+            <p className="text-center text-gray-900 dark:text-white mb-6">
               {t('checkout_success_desc')}
             </p>
             <Button
